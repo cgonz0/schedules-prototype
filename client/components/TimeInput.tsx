@@ -16,6 +16,25 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
     onTimeChange({ hour: "", minute: "", period: "AM" });
   };
 
+  const handleHourChange = (newHour: string) => {
+    onTimeChange({ ...time, hour: newHour });
+  };
+
+  const handleMinuteChange = (newMinute: string) => {
+    onTimeChange({ ...time, minute: newMinute });
+  };
+
+  const handlePeriodToggle = () => {
+    onTimeChange({ ...time, period: time.period === "AM" ? "PM" : "AM" });
+  };
+
+  // Generate hour options (1-12)
+  const hours = Array.from({ length: 12 }, (_, i) =>
+    (i + 1).toString().padStart(2, "0"),
+  );
+  // Generate minute options (00, 15, 30, 45)
+  const minutes = ["00", "15", "30", "45"];
+
   return (
     <div className="relative">
       <div className="border border-border rounded-lg p-4 bg-input">
@@ -25,22 +44,43 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
           </label>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <div className="w-7 h-6 bg-secondary rounded-2xl flex items-center justify-center">
-                <span className="text-xs text-secondary-foreground">
-                  {time.hour || "--"}
-                </span>
-              </div>
+              {/* Hour Selector */}
+              <select
+                value={time.hour}
+                onChange={(e) => handleHourChange(e.target.value)}
+                className="w-7 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer"
+              >
+                <option value="">--</option>
+                {hours.map((hour) => (
+                  <option key={hour} value={hour}>
+                    {hour}
+                  </option>
+                ))}
+              </select>
+
               <span className="text-xs text-muted-foreground">:</span>
-              <div className="w-7 h-6 bg-secondary rounded-2xl flex items-center justify-center">
-                <span className="text-xs text-secondary-foreground">
-                  {time.minute || "--"}
-                </span>
-              </div>
-              <div className="w-7 h-6 bg-secondary rounded-2xl flex items-center justify-center">
-                <span className="text-xs text-secondary-foreground">
-                  {time.hour ? time.period : "--"}
-                </span>
-              </div>
+
+              {/* Minute Selector */}
+              <select
+                value={time.minute}
+                onChange={(e) => handleMinuteChange(e.target.value)}
+                className="w-7 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer"
+              >
+                <option value="">--</option>
+                {minutes.map((minute) => (
+                  <option key={minute} value={minute}>
+                    {minute}
+                  </option>
+                ))}
+              </select>
+
+              {/* Period Toggle */}
+              <button
+                onClick={handlePeriodToggle}
+                className="w-7 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground hover:bg-gray-300 transition-colors"
+              >
+                {time.hour ? time.period : "--"}
+              </button>
             </div>
             {hasTime && (
               <button
