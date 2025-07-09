@@ -52,9 +52,9 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="relative w-full max-w-sm">
-        <div className="w-full bg-white rounded-t-[10px] shadow-lg overflow-hidden">
+    <div className="h-[667px] bg-gray-50 flex items-center justify-center p-4">
+      <div className="relative w-full max-w-sm h-full">
+        <div className="w-full h-full bg-white rounded-t-[10px] shadow-lg overflow-hidden flex flex-col">
           {/* Modal Header */}
           <div className="flex items-center justify-center h-11 px-4 bg-white border-b border-gray-100">
             <div className="flex items-center justify-between w-full">
@@ -74,12 +74,12 @@ export default function Index() {
           <AwayModeBar />
 
           {/* Schedules Section */}
-          <div className="p-4">
+          <div className="flex-1 overflow-y-auto p-4">
             <h2 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-4 font-rubik">
               SCHEDULES
             </h2>
 
-            <div className="space-y-4">
+            <div className="space-y-4 pb-20">
               {schedules.map((schedule) => (
                 <ScheduleCard
                   key={schedule.id}
