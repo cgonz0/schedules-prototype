@@ -568,8 +568,8 @@ export function ScheduleCard({
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="pt-4 space-y-4">
+          {/* Save Button */}
+          <div className="pt-4">
             <button
               className={`w-full h-10 px-6 font-semibold rounded-lg transition-colors ${
                 !schedule.enabled
@@ -594,17 +594,18 @@ export function ScheduleCard({
             >
               Save Changes
             </button>
-
-            <div className="flex justify-center">
-              <button
-                className="flex items-center gap-3 px-6 py-1 text-destructive font-semibold rounded-2xl hover:bg-red-50 transition-colors"
-                onClick={onDelete}
-              >
-                <Trash2 className="w-5 h-5" />
-                Delete Schedule
-              </button>
-            </div>
           </div>
+        </div>
+
+        {/* Delete Button - Always Enabled */}
+        <div className="pt-4 flex justify-center">
+          <button
+            className="flex items-center gap-3 px-6 py-1 text-destructive font-semibold rounded-2xl hover:bg-red-50 transition-colors"
+            onClick={onDelete}
+          >
+            <Trash2 className="w-5 h-5" />
+            Delete Schedule
+          </button>
         </div>
       )}
     </div>
