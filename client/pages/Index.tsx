@@ -48,7 +48,7 @@ export default function Index() {
       enabled: false,
       fanMode: "auto",
     };
-    setSchedules((prev) => [...prev, newSchedule]);
+    setSchedules((prev) => [newSchedule, ...prev]);
   };
 
   return (
@@ -95,7 +95,7 @@ export default function Index() {
         {/* Floating Action Button */}
         <button
           onClick={createNewSchedule}
-          className="fixed bottom-6 right-6 w-14 h-14 bg-[#32BDCD] rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-105"
+          className="absolute bottom-4 right-4 w-14 h-14 bg-[#32BDCD] rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-105"
           style={{
             filter: "drop-shadow(0px 4px 8px rgba(45, 50, 57, 0.20))",
           }}
