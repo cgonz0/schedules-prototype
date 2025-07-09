@@ -46,7 +46,7 @@ export default function Index() {
       days: [],
       time: { hour: "", minute: "", period: "AM" },
       enabled: true,
-      fanMode: "auto",
+      fanMode: null,
     };
     setSchedules((prev) => [newSchedule, ...prev]);
   };
