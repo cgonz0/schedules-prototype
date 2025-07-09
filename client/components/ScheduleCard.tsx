@@ -15,6 +15,7 @@ interface Schedule {
   enabled: boolean;
   fanMode: string;
   saved?: boolean;
+  isDraft?: boolean;
 }
 
 interface ScheduleCardProps {
@@ -29,6 +30,16 @@ export function ScheduleCard({
   onDelete,
 }: ScheduleCardProps) {
   const [showSuccessBanner, setShowSuccessBanner] = useState(false);
+  const [originalSchedule, setOriginalSchedule] = useState<Schedule | null>(
+    null,
+  );
+
+  // Track original values when schedule is first saved (not a new schedule)
+  useState(() => {
+    if (schedule.saved && !originalSchedule) {
+      setOriginalSchedule(schedule);
+    }
+  });
   const formatDays = (days: string[]) => {
     if (days.length === 0) return "No days selected";
     const dayNames = {
@@ -113,9 +124,26 @@ export function ScheduleCard({
     );
   };
 
+  // Check if schedule has unsaved changes
+  const hasUnsavedChanges = () => {
+    if (!originalSchedule || !schedule.saved) return false;
+
+    return (
+      originalSchedule.mode !== schedule.mode ||
+      originalSchedule.temperature !== schedule.temperature ||
+      JSON.stringify(originalSchedule.days) !== JSON.stringify(schedule.days) ||
+      JSON.stringify(originalSchedule.time) !== JSON.stringify(schedule.time) ||
+      originalSchedule.fanMode !== schedule.fanMode ||
+      originalSchedule.enabled !== schedule.enabled
+    );
+  };
+
   const handleSave = () => {
-    // Mark the schedule as saved/complete by updating it
-    onUpdate({ saved: true });
+    // Mark the schedule as saved/complete and clear draft state
+    onUpdate({ saved: true, isDraft: false });
+
+    // Update original schedule to current values
+    setOriginalSchedule({ ...schedule, saved: true, isDraft: false });
 
     // Show success banner
     setShowSuccessBanner(true);
@@ -124,6 +152,31 @@ export function ScheduleCard({
     setTimeout(() => {
       setShowSuccessBanner(false);
     }, 3000);
+  };
+
+  // Wrapper function to handle updates and set draft state
+  const handleUpdate = (updates: Partial<Schedule>) => {
+    // If this is a saved schedule and we're making changes, mark as draft
+    if (schedule.saved && originalSchedule) {
+      const newSchedule = { ...schedule, ...updates };
+      const willHaveChanges =
+        originalSchedule.mode !== newSchedule.mode ||
+        originalSchedule.temperature !== newSchedule.temperature ||
+        JSON.stringify(originalSchedule.days) !==
+          JSON.stringify(newSchedule.days) ||
+        JSON.stringify(originalSchedule.time) !==
+          JSON.stringify(newSchedule.time) ||
+        originalSchedule.fanMode !== newSchedule.fanMode ||
+        originalSchedule.enabled !== newSchedule.enabled;
+
+      if (willHaveChanges) {
+        updates.isDraft = true;
+      } else {
+        updates.isDraft = false;
+      }
+    }
+
+    onUpdate(updates);
   };
 
   return (
@@ -169,6 +222,13 @@ export function ScheduleCard({
                 {status.text}
               </span>
             </div>
+            {schedule.isDraft && (
+              <div className="px-5 py-0.5 bg-[#FAE5C6] rounded-full">
+                <span className="text-xs font-semibold text-[#663500]">
+                  Draft
+                </span>
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-1 text-sm text-foreground">
             <span>{formatDays(schedule.days)}</span>
@@ -180,7 +240,7 @@ export function ScheduleCard({
         <div className="flex flex-col items-center gap-3">
           <Switch
             checked={schedule.enabled}
-            onCheckedChange={(enabled) => onUpdate({ enabled })}
+            onCheckedChange={(enabled) => handleUpdate({ enabled })}
           />
           <ChevronUp className="w-5 h-5 text-foreground" />
         </div>
@@ -197,7 +257,7 @@ export function ScheduleCard({
                   onClick={() => {
                     const currentHeat = 68;
                     const newTemp = Math.max(50, currentHeat - 1);
-                    onUpdate({ temperature: newTemp });
+                    handleUpdate({ temperature: newTemp });
                   }}
                   className="p-0 hover:bg-gray-200 rounded transition-colors"
                 >
@@ -218,7 +278,7 @@ export function ScheduleCard({
                   onClick={() => {
                     const currentHeat = 68;
                     const newTemp = Math.min(85, currentHeat + 1);
-                    onUpdate({ temperature: newTemp });
+                    handleUpdate({ temperature: newTemp });
                   }}
                   className="p-0 hover:bg-gray-200 rounded transition-colors"
                 >
@@ -237,7 +297,7 @@ export function ScheduleCard({
                   onClick={() => {
                     const currentCool = 75;
                     const newTemp = Math.max(65, currentCool - 1);
-                    onUpdate({ temperature: newTemp });
+                    handleUpdate({ temperature: newTemp });
                   }}
                   className="p-0 hover:bg-gray-200 rounded transition-colors"
                 >
@@ -258,7 +318,7 @@ export function ScheduleCard({
                   onClick={() => {
                     const currentCool = 75;
                     const newTemp = Math.min(90, currentCool + 1);
-                    onUpdate({ temperature: newTemp });
+                    handleUpdate({ temperature: newTemp });
                   }}
                   className="p-0 hover:bg-gray-200 rounded transition-colors"
                 >
@@ -280,7 +340,7 @@ export function ScheduleCard({
                     schedule.temperature ||
                     (schedule.mode === "cool" ? 73 : 68);
                   const newTemp = Math.max(50, currentTemp - 1);
-                  onUpdate({ temperature: newTemp });
+                  handleUpdate({ temperature: newTemp });
                 }}
                 className="p-0 hover:bg-gray-200 rounded transition-colors"
               >
@@ -306,7 +366,7 @@ export function ScheduleCard({
                     schedule.temperature ||
                     (schedule.mode === "cool" ? 73 : 68);
                   const newTemp = Math.min(90, currentTemp + 1);
-                  onUpdate({ temperature: newTemp });
+                  handleUpdate({ temperature: newTemp });
                 }}
                 className="p-0 hover:bg-gray-200 rounded transition-colors"
               >
@@ -343,7 +403,7 @@ export function ScheduleCard({
               } else if (mode === "off") {
                 updates.temperature = null;
               }
-              onUpdate(updates);
+              handleUpdate(updates);
             }}
           />
         </div>
@@ -360,7 +420,7 @@ export function ScheduleCard({
                   ? "bg-foreground text-primary-foreground"
                   : "bg-secondary text-foreground"
               }`}
-              onClick={() => onUpdate({ fanMode: "auto" })}
+              onClick={() => handleUpdate({ fanMode: "auto" })}
             >
               <FanAutoIcon />
               Auto
@@ -371,7 +431,7 @@ export function ScheduleCard({
                   ? "bg-foreground text-primary-foreground"
                   : "bg-secondary text-foreground"
               }`}
-              onClick={() => onUpdate({ fanMode: "on" })}
+              onClick={() => handleUpdate({ fanMode: "on" })}
             >
               <FanOnIcon />
               On
@@ -388,11 +448,11 @@ export function ScheduleCard({
             <div className="space-y-4">
               <WeekdayPicker
                 selectedDays={schedule.days}
-                onDaysChange={(days) => onUpdate({ days })}
+                onDaysChange={(days) => handleUpdate({ days })}
               />
               <TimeInput
                 time={schedule.time}
-                onTimeChange={(time) => onUpdate({ time })}
+                onTimeChange={(time) => handleUpdate({ time })}
               />
             </div>
           </div>
@@ -402,13 +462,19 @@ export function ScheduleCard({
         <div className="pt-4 space-y-4">
           <button
             className={`w-full h-10 px-6 font-semibold rounded-lg transition-colors ${
-              isScheduleComplete() && !schedule.saved
-                ? "bg-[#32BDCD] text-black hover:bg-[#2BA8B7]"
+              (isScheduleComplete() && !schedule.saved) ||
+              (schedule.saved && hasUnsavedChanges())
+                ? "bg-[#1D2025] text-white hover:bg-gray-800"
                 : "bg-button-disabled-bg text-button-disabled-text cursor-not-allowed"
             }`}
-            disabled={!isScheduleComplete() || schedule.saved}
+            disabled={
+              !isScheduleComplete() || (schedule.saved && !hasUnsavedChanges())
+            }
             onClick={
-              isScheduleComplete() && !schedule.saved ? handleSave : undefined
+              (isScheduleComplete() && !schedule.saved) ||
+              (schedule.saved && hasUnsavedChanges())
+                ? handleSave
+                : undefined
             }
           >
             Save Changes
