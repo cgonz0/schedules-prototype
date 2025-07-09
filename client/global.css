@@ -1,97 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Rubik:wght@600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   /**
-   * Tailwind CSS theme
-   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
-   * A different format will require also updating the theme in tailwind.config.ts.
-  */
+   * Smart Home Thermostat Design System
+   * Colors from Figma design with HSL values for Tailwind compatibility
+   */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core brand colors */
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 215 17% 12%; /* #1D2025 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Smart home specific colors */
+    --primary: 215 17% 12%; /* #1D2025 - Brand Primary */
+    --primary-foreground: 220 23% 98%; /* #FBFCFD - Brand Primary Inverse */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --secondary: 214 23% 91%; /* #EDEFF2 - Gray 100 */
+    --secondary-foreground: 215 17% 12%; /* #1D2025 */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --muted: 214 23% 91%; /* #EDEFF2 - Input background */
+    --muted-foreground: 214 12% 46%; /* #676F79 - Text labels */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --accent: 208 69% 51%; /* #1772D6 - Blue accent for cool mode */
+    --accent-foreground: 220 23% 98%; /* #FBFCFD */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --destructive: 345 84% 33%; /* #9D0C1F - Error/Delete red */
+    --destructive-foreground: 220 23% 98%; /* #FBFCFD */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* UI element colors */
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 215 17% 12%; /* #1D2025 */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --popover: 0 0% 100%; /* #FFFFFF */
+    --popover-foreground: 215 17% 12%; /* #1D2025 */
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 214 12% 46%; /* #676F79 - Input stroke */
+    --input: 220 23% 98%; /* #FBFCFD - Input background */
+    --ring: 215 17% 12%; /* #1D2025 */
+
+    /* Switch colors */
+    --switch-active: 215 17% 12%; /* #1D2025 */
+    --switch-handle: 220 23% 98%; /* #FBFCFD */
+    --switch-border: 215 18% 76%; /* #BCC5CF */
+
+    /* Cool mode colors */
+    --cool-bg: 212 85% 94%; /* #E2EEFC - Blue 100 */
+    --cool-text: 214 72% 47%; /* #1479BC */
+    --cool-primary: 208 69% 51%; /* #1772D6 - Blue 800 */
+
+    /* Button states */
+    --button-disabled-bg: 213 22% 81%; /* #CCD1D8 */
+    --button-disabled-text: 210 18% 64%; /* #95A0AC */
 
     --radius: 0.5rem;
+  }
+}
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+@layer base {
+  * {
+    @apply border-border;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family:
+      "Open Sans",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+  }
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+  .font-rubik {
+    font-family:
+      "Rubik",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
   }
 }
 
