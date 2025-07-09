@@ -306,9 +306,10 @@ export function ScheduleCard({
 
       {/* Controls Section */}
       {!isCollapsed && (
-        <div
-          className={`space-y-4 ${!schedule.enabled ? "opacity-50 pointer-events-none" : ""}`}
-        >
+        <>
+          <div
+            className={`space-y-4 ${!schedule.enabled ? "opacity-50 pointer-events-none" : ""}`}
+          >
           {/* Mode Selection */}
           <div className="space-y-2.5">
             <label
