@@ -6,17 +6,16 @@ interface SwitchProps {
 export function Switch({ checked, onCheckedChange }: SwitchProps) {
   return (
     <button
-      className="relative w-10 h-6 rounded-full border border-switch-border bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
+      className={`relative w-10 h-6 rounded-full border transition-colors ${
+        checked
+          ? "border-[#B7C0CD] bg-[#32BDCD]"
+          : "border-[#BCC5CF] bg-[#BCC5CF]"
+      }`}
       onClick={() => onCheckedChange(!checked)}
     >
-      {/* Background when active */}
-      {checked && (
-        <div className="absolute inset-0 rounded-full bg-switch-active" />
-      )}
-
       {/* Handle */}
       <div
-        className={`absolute top-0.5 w-5 h-5 bg-switch-handle rounded-full shadow-sm transition-transform duration-200 ease-in-out ${
+        className={`absolute top-0.5 w-5 h-5 bg-[#FBFCFD] rounded-full transition-transform duration-200 ease-in-out ${
           checked ? "translate-x-4" : "translate-x-0.5"
         }`}
         style={{
