@@ -1,4 +1,5 @@
 import { ChevronUp, Trash2, X } from "lucide-react";
+import { useState, useEffect } from "react";
 import { ScheduleBadge } from "./ScheduleBadge";
 import { ModeSelector } from "./ModeSelector";
 import { WeekdayPicker } from "./WeekdayPicker";
@@ -27,6 +28,7 @@ export function ScheduleCard({
   onUpdate,
   onDelete,
 }: ScheduleCardProps) {
+  const [showSuccessBanner, setShowSuccessBanner] = useState(false);
   const formatDays = (days: string[]) => {
     if (days.length === 0) return "No days selected";
     const dayNames = {
@@ -114,10 +116,40 @@ export function ScheduleCard({
   const handleSave = () => {
     // Mark the schedule as saved/complete by updating it
     onUpdate({ saved: true });
+
+    // Show success banner
+    setShowSuccessBanner(true);
+
+    // Hide banner after 3 seconds
+    setTimeout(() => {
+      setShowSuccessBanner(false);
+    }, 3000);
   };
 
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 relative">
+      {/* Success Banner */}
+      {showSuccessBanner && (
+        <div className="absolute -top-2 left-0 right-0 z-10 flex justify-center">
+          <div className="flex items-center gap-2 px-4 py-2 bg-[#E8FCE8] rounded-lg shadow-lg border border-green-200">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.47726 2 2 6.47726 2 12C2 17.5227 6.47726 22 12 22C17.5227 22 22 17.5227 22 12C22 6.47726 17.5227 2 12 2ZM18.4756 8.94891L10.5158 16.7305C10.5073 16.739 10.4988 16.7471 10.4902 16.7553C10.4877 16.7578 10.4851 16.7604 10.4821 16.7625C10.474 16.7702 10.4655 16.7774 10.4569 16.7843C10.4493 16.7911 10.4416 16.7971 10.4339 16.803C10.4258 16.8094 10.4177 16.8154 10.4096 16.8214C10.3985 16.8295 10.3874 16.8372 10.3759 16.8444C10.3643 16.8521 10.3528 16.859 10.3409 16.8658C10.3174 16.8799 10.2931 16.8922 10.2683 16.9033C10.2564 16.9089 10.2444 16.914 10.2325 16.9187C10.2193 16.9238 10.206 16.9289 10.1928 16.9336C10.1813 16.9375 10.1693 16.9413 10.1574 16.9447C10.1446 16.9486 10.1318 16.952 10.119 16.955C10.1062 16.958 10.0934 16.9609 10.0806 16.9631C10.0289 16.9729 9.976 16.978 9.92354 16.978C9.88041 16.978 9.83783 16.9746 9.79553 16.9678C9.78439 16.9665 9.77326 16.9644 9.76271 16.9622C9.75074 16.9601 9.73884 16.9575 9.72721 16.9545C9.72077 16.9533 9.71441 16.9516 9.70854 16.9494C9.69993 16.9477 9.69184 16.9452 9.68374 16.9426C9.65773 16.9349 9.63159 16.9259 9.60655 16.9153C9.58899 16.908 9.57149 16.9003 9.55439 16.8918C9.53729 16.8833 9.52026 16.8743 9.50409 16.8645C9.50021 16.8624 9.49637 16.8602 9.49253 16.8577C9.48144 16.8508 9.47077 16.844 9.4601 16.8368C9.44858 16.8291 9.43748 16.8214 9.42639 16.8129C9.40633 16.7984 9.38713 16.7826 9.36878 16.7659C9.36067 16.7587 9.35299 16.7514 9.34574 16.7442C9.34318 16.742 9.34104 16.7399 9.33891 16.7378L9.32867 16.7275L5.5026 12.95C5.17573 12.6274 5.17231 12.1004 5.49535 11.7735C5.81796 11.4462 6.34497 11.4428 6.67184 11.7658L9.92654 15.0292L17.3124 7.75873C17.6409 7.4374 18.1675 7.44337 18.4889 7.77196C18.8102 8.10055 18.8042 8.62757 18.4756 8.94891Z"
+                fill="#056121"
+              />
+            </svg>
+            <span className="text-sm font-normal text-[#2E3237]">
+              Schedule saved successfully
+            </span>
+          </div>
+        </div>
+      )}
       {/* Summary Section */}
       <div className="flex items-start justify-between mb-6">
         <div className="flex flex-col gap-2">
@@ -370,12 +402,14 @@ export function ScheduleCard({
         <div className="pt-4 space-y-4">
           <button
             className={`w-full h-10 px-6 font-semibold rounded-lg transition-colors ${
-              isScheduleComplete()
+              isScheduleComplete() && !schedule.saved
                 ? "bg-[#32BDCD] text-black hover:bg-[#2BA8B7]"
                 : "bg-button-disabled-bg text-button-disabled-text cursor-not-allowed"
             }`}
-            disabled={!isScheduleComplete()}
-            onClick={isScheduleComplete() ? handleSave : undefined}
+            disabled={!isScheduleComplete() || schedule.saved}
+            onClick={
+              isScheduleComplete() && !schedule.saved ? handleSave : undefined
+            }
           >
             Save Changes
           </button>
