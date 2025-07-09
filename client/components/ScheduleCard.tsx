@@ -166,53 +166,144 @@ export function ScheduleCard({
         {/* Temperature Controls - Show for Auto, Cool, Heat modes */}
         {schedule.mode && schedule.mode !== "off" && (
           <div className="space-y-2.5">
-            <label className="text-sm font-semibold text-muted-foreground">
-              Temperature
-            </label>
-            <div className="flex items-center justify-center gap-4 p-4 bg-gray-50 rounded-lg">
-              <button
-                className="w-10 h-10 rounded-full bg-white border border-gray-300 flex items-center justify-center text-lg font-semibold hover:bg-gray-100 transition-colors"
-                onClick={() => {
-                  const currentTemp =
-                    schedule.temperature ||
-                    (schedule.mode === "cool" ? 73 : 68);
-                  const newTemp = Math.max(50, currentTemp - 1);
-                  onUpdate({ temperature: newTemp });
-                }}
-              >
-                −
-              </button>
-
-              <div className="text-center">
-                <div className="text-3xl font-bold text-foreground">
-                  {schedule.temperature ||
-                    (schedule.mode === "cool"
-                      ? 73
-                      : schedule.mode === "heat"
-                        ? 68
-                        : 70)}
-                  °
+            {schedule.mode === "auto" ? (
+              // Auto mode: Show both heat and cool controls side by side
+              <div className="flex gap-3">
+                {/* Heat Control */}
+                <div className="flex-1 h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
+                  <button
+                    onClick={() => {
+                      const currentHeat = 68; // Default heat temp
+                      const newTemp = Math.max(50, currentHeat - 1);
+                      // For auto mode, we might need to track heat/cool separately
+                      onUpdate({ temperature: newTemp });
+                    }}
+                    className="p-0 hover:bg-gray-200 rounded transition-colors"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M1.66675 7.25241C1.66631 7.40053 1.72303 7.54272 1.82434 7.64748L9.63785 15.6708C9.848 15.8876 10.1883 15.8876 10.3984 15.6708L18.1708 7.62169C18.3098 7.48171 18.3651 7.27529 18.3156 7.08137C18.2662 6.88745 18.1196 6.73604 17.9319 6.68505C17.7443 6.63406 17.5446 6.69138 17.4093 6.83508L10.0157 14.4897L2.5844 6.85785C2.43017 6.69958 2.19899 6.65269 1.99833 6.73897C1.79766 6.82525 1.66687 7.02778 1.66675 7.25241Z"
+                        fill="#A23110"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    className="text-base font-semibold"
+                    style={{ color: "#A23110" }}
+                  >
+                    68°
+                  </span>
+                  <button
+                    onClick={() => {
+                      const currentHeat = 68;
+                      const newTemp = Math.min(85, currentHeat + 1);
+                      onUpdate({ temperature: newTemp });
+                    }}
+                    className="p-0 hover:bg-gray-200 rounded transition-colors"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M2.16675 14.4143C2.16631 14.2661 2.22303 14.1239 2.32434 14.0192L10.1379 5.99582C10.348 5.77906 10.6883 5.77906 10.8984 5.99582L18.6708 14.045C18.8097 14.185 18.8651 14.3914 18.8156 14.5853C18.7662 14.7792 18.6196 14.9306 18.4319 14.9816C18.2443 15.0326 18.0446 14.9753 17.9093 14.8316L10.5157 7.17699L3.0844 14.8088C2.93017 14.9671 2.69899 15.014 2.49833 14.9277C2.29766 14.8414 2.16687 14.6389 2.16675 14.4143Z"
+                        fill="#A23110"
+                      />
+                    </svg>
+                  </button>
                 </div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wide">
-                  {schedule.mode === "auto"
-                    ? "TARGET"
-                    : schedule.mode?.toUpperCase()}
+
+                {/* Cool Control */}
+                <div className="flex-1 h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
+                  <button
+                    onClick={() => {
+                      const currentCool = 75;
+                      const newTemp = Math.max(65, currentCool - 1);
+                      onUpdate({ temperature: newTemp });
+                    }}
+                    className="p-0 hover:bg-gray-200 rounded transition-colors"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M2.16675 7.25241C2.16631 7.40053 2.22303 7.54272 2.32434 7.64748L10.1379 15.6708C10.348 15.8876 10.6883 15.8876 10.8984 15.6708L18.6708 7.62169C18.8098 7.48171 18.8651 7.27529 18.8156 7.08137C18.7662 6.88745 18.6196 6.73604 18.4319 6.68505C18.2443 6.63406 18.0446 6.69138 17.9093 6.83508L10.5157 14.4897L3.0844 6.85785C2.93017 6.69958 2.69899 6.65269 2.49833 6.73897C2.29766 6.82525 2.16687 7.02778 2.16675 7.25241Z"
+                        fill="#1772D6"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    className="text-base font-semibold"
+                    style={{ color: "#1772D6" }}
+                  >
+                    75°F
+                  </span>
+                  <button
+                    onClick={() => {
+                      const currentCool = 75;
+                      const newTemp = Math.min(90, currentCool + 1);
+                      onUpdate({ temperature: newTemp });
+                    }}
+                    className="p-0 hover:bg-gray-200 rounded transition-colors"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M1.66675 14.4143C1.66631 14.2661 1.72303 14.1239 1.82434 14.0192L9.63785 5.99582C9.848 5.77906 10.1883 5.77906 10.3984 5.99582L18.1708 14.045C18.3097 14.185 18.3651 14.3914 18.3156 14.5853C18.2662 14.7792 18.1196 14.9306 17.9319 14.9816C17.7443 15.0326 17.5446 14.9753 17.4093 14.8316L10.0157 7.17699L2.5844 14.8088C2.93017 14.9671 2.69899 15.014 2.49833 14.9277C2.29766 14.8414 2.16687 14.6389 2.16675 14.4143Z"
+                        fill="#1772D6"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </div>
-
-              <button
-                className="w-10 h-10 rounded-full bg-white border border-gray-300 flex items-center justify-center text-lg font-semibold hover:bg-gray-100 transition-colors"
-                onClick={() => {
-                  const currentTemp =
-                    schedule.temperature ||
-                    (schedule.mode === "cool" ? 73 : 68);
-                  const newTemp = Math.min(90, currentTemp + 1);
-                  onUpdate({ temperature: newTemp });
-                }}
-              >
-                +
-              </button>
-            </div>
+            ) : (
+              // Single mode: Show one control for heat or cool
+              <div className="space-y-2.5">
+                <label className="text-sm font-semibold text-muted-foreground">
+                  Temperature
+                </label>
+                <div className="h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
+                  <button
+                    onClick={() => {
+                      const currentTemp =
+                        schedule.temperature ||
+                        (schedule.mode === "cool" ? 73 : 68);
+                      const newTemp = Math.max(50, currentTemp - 1);
+                      onUpdate({ temperature: newTemp });
+                    }}
+                    className="p-0 hover:bg-gray-200 rounded transition-colors"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M1.66675 7.25241C1.66631 7.40053 1.72303 7.54272 1.82434 7.64748L9.63785 15.6708C9.848 15.8876 10.1883 15.8876 10.3984 15.6708L18.1708 7.62169C18.3098 7.48171 18.3651 7.27529 18.3156 7.08137C18.2662 6.88745 18.1196 6.73604 17.9319 6.68505C17.7443 6.63406 17.5446 6.69138 17.4093 6.83508L10.0157 14.4897L2.5844 6.85785C2.43017 6.69958 2.19899 6.65269 1.99833 6.73897C1.79766 6.82525 1.66687 7.02778 1.66675 7.25241Z"
+                        fill={schedule.mode === "cool" ? "#1772D6" : "#A23110"}
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    className="text-base font-semibold"
+                    style={{
+                      color: schedule.mode === "cool" ? "#1772D6" : "#A23110",
+                    }}
+                  >
+                    {schedule.temperature ||
+                      (schedule.mode === "cool" ? 73 : 68)}
+                    °{schedule.mode === "cool" ? "F" : ""}
+                  </span>
+                  <button
+                    onClick={() => {
+                      const currentTemp =
+                        schedule.temperature ||
+                        (schedule.mode === "cool" ? 73 : 68);
+                      const newTemp = Math.min(90, currentTemp + 1);
+                      onUpdate({ temperature: newTemp });
+                    }}
+                    className="p-0 hover:bg-gray-200 rounded transition-colors"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M1.66675 14.4143C1.66631 14.2661 1.72303 14.1239 1.82434 14.0192L9.63785 5.99582C9.848 5.77906 10.1883 5.77906 10.3984 5.99582L18.1708 14.045C18.3097 14.185 18.3651 14.3914 18.3156 14.5853C18.2662 14.7792 18.1196 14.9306 17.9319 14.9816C17.7443 15.0326 17.5446 14.9753 17.4093 14.8316L10.0157 7.17699L2.5844 14.8088C2.93017 14.9671 2.69899 15.014 2.49833 14.9277C2.29766 14.8414 2.16687 14.6389 2.16675 14.4143Z"
+                        fill={schedule.mode === "cool" ? "#1772D6" : "#A23110"}
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
