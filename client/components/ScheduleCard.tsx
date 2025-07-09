@@ -13,6 +13,7 @@ interface Schedule {
   time: { hour: string; minute: string; period: string };
   enabled: boolean;
   fanMode: string;
+  saved?: boolean;
 }
 
 interface ScheduleCardProps {
