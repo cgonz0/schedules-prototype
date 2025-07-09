@@ -52,7 +52,7 @@ export default function Index() {
   };
 
   return (
-    <div className="h-[667px] bg-gray-50 flex items-center justify-center p-4">
+    <div className="h-[800px] bg-gray-50 flex items-center justify-center p-4">
       <div className="relative w-full max-w-sm h-full">
         <div className="w-full h-full bg-white rounded-t-[10px] shadow-lg overflow-hidden flex flex-col">
           {/* Modal Header */}
