@@ -88,6 +88,28 @@ export default function Index() {
           </div>
         </div>
       </div>
+
+      {/* Floating Action Button */}
+      <button
+        onClick={createNewSchedule}
+        className="fixed bottom-6 right-6 w-14 h-14 bg-[#32BDCD] rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-105"
+        style={{
+          filter: "drop-shadow(0px 4px 8px rgba(45, 50, 57, 0.20))",
+        }}
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          fill="none"
+          className="text-black"
+        >
+          <path
+            d="M25.6667 14C25.6667 14.3796 25.3588 14.6875 24.9792 14.6875H14.6875V24.9792C14.6875 25.3588 14.3796 25.6667 14 25.6667C13.6204 25.6667 13.3125 25.3588 13.3125 24.9792V14.6875H3.02083C2.64124 14.6875 2.33334 14.3796 2.33334 14C2.33334 13.6204 2.64124 13.3126 3.02083 13.3126H13.3125V3.02086C13.3125 2.64127 13.6204 2.33337 14 2.33337C14.3796 2.33337 14.6875 2.64127 14.6875 3.02086V13.3126H24.9792C25.3588 13.3126 25.6667 13.6204 25.6667 14Z"
+            fill="black"
+          />
+        </svg>
+      </button>
     </div>
   );
 }
