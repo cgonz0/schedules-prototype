@@ -152,7 +152,7 @@ export function ScheduleCard({
               if (mode === "cool" && !schedule.temperature) {
                 updates.temperature = 73;
               } else if (mode === "heat" && !schedule.temperature) {
-                updates.temperature = 72;
+                updates.temperature = 68;
               } else if (mode === "off" || mode === "auto") {
                 updates.temperature = null;
               }
