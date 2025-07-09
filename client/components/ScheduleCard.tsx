@@ -161,6 +161,59 @@ export function ScheduleCard({
           />
         </div>
 
+        {/* Temperature Controls - Show for Auto, Cool, Heat modes */}
+        {schedule.mode && schedule.mode !== "off" && (
+          <div className="space-y-2.5">
+            <label className="text-sm font-semibold text-muted-foreground">
+              Temperature
+            </label>
+            <div className="flex items-center justify-center gap-4 p-4 bg-gray-50 rounded-lg">
+              <button
+                className="w-10 h-10 rounded-full bg-white border border-gray-300 flex items-center justify-center text-lg font-semibold hover:bg-gray-100 transition-colors"
+                onClick={() => {
+                  const currentTemp =
+                    schedule.temperature ||
+                    (schedule.mode === "cool" ? 73 : 68);
+                  const newTemp = Math.max(50, currentTemp - 1);
+                  onUpdate({ temperature: newTemp });
+                }}
+              >
+                −
+              </button>
+
+              <div className="text-center">
+                <div className="text-3xl font-bold text-foreground">
+                  {schedule.temperature ||
+                    (schedule.mode === "cool"
+                      ? 73
+                      : schedule.mode === "heat"
+                        ? 68
+                        : 70)}
+                  °
+                </div>
+                <div className="text-sm text-muted-foreground uppercase tracking-wide">
+                  {schedule.mode === "auto"
+                    ? "TARGET"
+                    : schedule.mode?.toUpperCase()}
+                </div>
+              </div>
+
+              <button
+                className="w-10 h-10 rounded-full bg-white border border-gray-300 flex items-center justify-center text-lg font-semibold hover:bg-gray-100 transition-colors"
+                onClick={() => {
+                  const currentTemp =
+                    schedule.temperature ||
+                    (schedule.mode === "cool" ? 73 : 68);
+                  const newTemp = Math.min(90, currentTemp + 1);
+                  onUpdate({ temperature: newTemp });
+                }}
+              >
+                +
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Fan Mode Selection */}
         <div className="space-y-2.5">
           <label className="text-sm font-semibold text-muted-foreground">
