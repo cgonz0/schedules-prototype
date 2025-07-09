@@ -108,9 +108,14 @@ export function ScheduleCard({
             <div className="flex items-center gap-2">
               {status.badge && <ScheduleBadge mode={status.badge} />}
               <span
-                className={`text-sm font-semibold uppercase tracking-wide ${
-                  status.badge ? "text-cool-primary" : "text-foreground"
-                }`}
+                className="text-sm font-semibold uppercase tracking-wide"
+                style={{
+                  color:
+                    typeof status.color === "string" &&
+                    status.color.startsWith("#")
+                      ? status.color
+                      : undefined,
+                }}
               >
                 {status.text}
               </span>
