@@ -54,6 +54,7 @@ export function ScheduleCard({
       return {
         text: "NO MODE SELECTED",
         badge: null,
+        color: "text-foreground",
       };
     }
 
@@ -61,6 +62,7 @@ export function ScheduleCard({
       return {
         text: `COOL TO ${schedule.temperature}°`,
         badge: schedule.mode,
+        color: "#1772D6",
       };
     }
 
@@ -68,26 +70,30 @@ export function ScheduleCard({
       return {
         text: `HEAT TO ${schedule.temperature}°`,
         badge: schedule.mode,
+        color: "#A23110",
+      };
+    }
+
+    if (schedule.mode === "auto") {
+      return {
+        text: "AUTO 68-75°",
+        badge: schedule.mode,
+        color: "#9D4BB5",
       };
     }
 
     if (schedule.mode === "off") {
       return {
         text: "OFF",
-        badge: null,
-      };
-    }
-
-    if (schedule.mode === "auto") {
-      return {
-        text: "AUTO MODE",
-        badge: null,
+        badge: schedule.mode,
+        color: "text-foreground",
       };
     }
 
     return {
       text: "NO MODE SELECTED",
       badge: null,
+      color: "text-foreground",
     };
   };
 
