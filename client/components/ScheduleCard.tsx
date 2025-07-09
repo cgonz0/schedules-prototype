@@ -107,7 +107,18 @@ export function ScheduleCard({
           </label>
           <ModeSelector
             selectedMode={schedule.mode}
-            onModeSelect={(mode) => onUpdate({ mode })}
+            onModeSelect={(mode) => {
+              // Set default temperature when mode is selected
+              const updates: Partial<Schedule> = { mode };
+              if (mode === "cool" && !schedule.temperature) {
+                updates.temperature = 73;
+              } else if (mode === "heat" && !schedule.temperature) {
+                updates.temperature = 72;
+              } else if (mode === "off" || mode === "auto") {
+                updates.temperature = null;
+              }
+              onUpdate(updates);
+            }}
           />
         </div>
 
