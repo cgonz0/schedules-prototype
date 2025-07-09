@@ -50,16 +50,44 @@ export function ScheduleCard({
   };
 
   const getScheduleStatus = () => {
-    if (!schedule.mode || !schedule.temperature) {
+    if (!schedule.mode) {
       return {
         text: "NO MODE SELECTED",
         badge: null,
       };
     }
 
+    if (schedule.mode === "cool" && schedule.temperature) {
+      return {
+        text: `COOL TO ${schedule.temperature}°`,
+        badge: schedule.mode,
+      };
+    }
+
+    if (schedule.mode === "heat" && schedule.temperature) {
+      return {
+        text: `HEAT TO ${schedule.temperature}°`,
+        badge: schedule.mode,
+      };
+    }
+
+    if (schedule.mode === "off") {
+      return {
+        text: "OFF",
+        badge: null,
+      };
+    }
+
+    if (schedule.mode === "auto") {
+      return {
+        text: "AUTO MODE",
+        badge: null,
+      };
+    }
+
     return {
-      text: `COOL TO ${schedule.temperature}°`,
-      badge: schedule.mode,
+      text: "NO MODE SELECTED",
+      badge: null,
     };
   };
 
