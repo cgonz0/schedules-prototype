@@ -48,7 +48,7 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
               <select
                 value={time.hour}
                 onChange={(e) => handleHourChange(e.target.value)}
-                className="w-7 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer"
+                className="w-10 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer"
               >
                 <option value="">--</option>
                 {hours.map((hour) => (
@@ -64,7 +64,7 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
               <select
                 value={time.minute}
                 onChange={(e) => handleMinuteChange(e.target.value)}
-                className="w-7 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer"
+                className="w-10 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer"
               >
                 <option value="">--</option>
                 {minutes.map((minute) => (
@@ -77,7 +77,7 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
               {/* Period Toggle */}
               <button
                 onClick={handlePeriodToggle}
-                className="w-7 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground hover:bg-gray-300 transition-colors"
+                className="w-10 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground hover:bg-gray-300 transition-colors"
               >
                 {time.hour ? time.period : "--"}
               </button>
