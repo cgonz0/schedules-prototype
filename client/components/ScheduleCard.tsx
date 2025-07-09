@@ -266,8 +266,7 @@ export function ScheduleCard({
         </div>
       </div>
 
-      {/* Temperature Controls - Show for Auto, Cool, Heat modes */}
-      {schedule.mode && schedule.mode !== "off" && (
+      {/* Controls Section */}
         <div className="flex gap-3">
           {schedule.mode === "auto" ? (
             <>
