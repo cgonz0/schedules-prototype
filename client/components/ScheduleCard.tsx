@@ -308,7 +308,7 @@ export function ScheduleCard({
       {!isCollapsed && (
         <>
           <div
-            className={`space-y-4 ${!schedule.enabled ? "opacity-50 pointer-events-none" : ""}`}
+            className={`mt-4 space-y-4 ${!schedule.enabled ? "opacity-50 pointer-events-none" : ""}`}
           >
             {/* Mode Selection */}
             <div className="space-y-2.5">
