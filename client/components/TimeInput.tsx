@@ -37,8 +37,8 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
 
   return (
     <div className="relative">
-      <div className="border border-border rounded-lg p-3 bg-input h-14">
-        <div className="flex flex-col gap-2">
+      <div className="border border-border rounded-lg px-3 py-2 bg-input min-h-14">
+        <div className="flex flex-col gap-1.5">
           <label className="text-sm font-semibold text-muted-foreground">
             Time
           </label>
@@ -48,7 +48,7 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
               <select
                 value={time.hour}
                 onChange={(e) => handleHourChange(e.target.value)}
-                className="w-10 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer"
+                className="w-8 h-5 bg-secondary rounded-xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer flex-shrink-0"
               >
                 <option value="">--</option>
                 {hours.map((hour) => (
@@ -64,7 +64,7 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
               <select
                 value={time.minute}
                 onChange={(e) => handleMinuteChange(e.target.value)}
-                className="w-10 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer"
+                className="w-8 h-5 bg-secondary rounded-xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer flex-shrink-0"
               >
                 <option value="">--</option>
                 {minutes.map((minute) => (
@@ -77,7 +77,7 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
               {/* Period Toggle */}
               <button
                 onClick={handlePeriodToggle}
-                className="w-10 h-6 bg-secondary rounded-2xl text-xs text-secondary-foreground hover:bg-gray-300 transition-colors"
+                className="w-8 h-5 bg-secondary rounded-xl text-xs text-secondary-foreground hover:bg-gray-300 transition-colors flex-shrink-0"
               >
                 {time.hour ? time.period : "--"}
               </button>
@@ -85,9 +85,9 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
             {hasTime && (
               <button
                 onClick={clearTime}
-                className="w-6 h-6 rounded-full bg-muted-foreground text-primary-foreground flex items-center justify-center hover:bg-gray-500 transition-colors"
+                className="w-5 h-5 rounded-full bg-muted-foreground text-primary-foreground flex items-center justify-center hover:bg-gray-500 transition-colors flex-shrink-0 ml-1"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3 h-3" />
               </button>
             )}
           </div>
