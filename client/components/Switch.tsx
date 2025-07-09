@@ -8,7 +8,7 @@ export function Switch({ checked, onCheckedChange }: SwitchProps) {
     <button
       className={`relative w-10 h-6 rounded-full border transition-colors ${
         checked
-          ? "border-[#B7C0CD] bg-[#32BDCD]"
+          ? "border-[#B7C0CD] bg-[#1D2025]"
           : "border-[#BCC5CF] bg-[#BCC5CF]"
       }`}
       onClick={() => onCheckedChange(!checked)}
