@@ -45,7 +45,7 @@ export default function Index() {
       temperature: null,
       days: [],
       time: { hour: "", minute: "", period: "AM" },
-      enabled: false,
+      enabled: true,
       fanMode: "auto",
     };
     setSchedules((prev) => [newSchedule, ...prev]);

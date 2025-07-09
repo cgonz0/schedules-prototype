@@ -227,7 +227,14 @@ export function ScheduleCard({
                 {status.text}
               </span>
             </div>
-            {schedule.isDraft && (
+            {!schedule.enabled && (
+              <div className="px-5 py-0.5 bg-[#D9EBFC] rounded-full">
+                <span className="text-xs font-semibold text-[#034F8C]">
+                  Paused
+                </span>
+              </div>
+            )}
+            {schedule.isDraft && schedule.enabled && (
               <div className="px-5 py-0.5 bg-[#FAE5C6] rounded-full">
                 <span className="text-xs font-semibold text-[#663500]">
                   Draft
@@ -256,11 +263,7 @@ export function ScheduleCard({
 
         <div className="flex flex-col items-center gap-3">
           <Switch
-            checked={
-              originalSchedule && schedule.saved
-                ? originalSchedule.enabled
-                : schedule.enabled
-            }
+            checked={schedule.enabled}
             onCheckedChange={(enabled) => handleUpdate({ enabled })}
           />
           <ChevronUp className="w-5 h-5 text-foreground" />
@@ -268,15 +271,20 @@ export function ScheduleCard({
       </div>
 
       {/* Controls Section */}
-      <div className="space-y-4">
+      <div
+        className={`space-y-4 ${!schedule.enabled ? "opacity-50 pointer-events-none" : ""}`}
+      >
         {/* Mode Selection */}
         <div className="space-y-2.5">
-          <label className="text-sm font-semibold text-muted-foreground">
+          <label
+            className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
+          >
             Mode
           </label>
           <ModeSelector
             selectedMode={schedule.mode}
             onModeSelect={(mode) => {
+              if (!schedule.enabled) return;
               // Set default temperature when mode is selected
               const updates: Partial<Schedule> = { mode };
               if (mode === "cool" && !schedule.temperature) {
@@ -296,7 +304,9 @@ export function ScheduleCard({
         {/* Temperature Controls */}
         {schedule.mode && schedule.mode !== "off" && (
           <div className="space-y-2.5">
-            <label className="text-sm font-semibold text-muted-foreground">
+            <label
+              className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
+            >
               Temperature
             </label>
             <div className="flex gap-3">
@@ -457,7 +467,9 @@ export function ScheduleCard({
 
         {/* Fan Mode Selection */}
         <div className="space-y-2.5">
-          <label className="text-sm font-semibold text-muted-foreground">
+          <label
+            className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
+          >
             Fan Mode
           </label>
           <div className="flex gap-1">
@@ -489,7 +501,9 @@ export function ScheduleCard({
         {/* Schedule Details */}
         <div className="space-y-6 pt-2">
           <div className="space-y-2.5">
-            <label className="text-sm font-semibold text-muted-foreground">
+            <label
+              className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
+            >
               Schedule
             </label>
             <div className="space-y-4">
@@ -509,17 +523,22 @@ export function ScheduleCard({
         <div className="pt-4 space-y-4">
           <button
             className={`w-full h-10 px-6 font-semibold rounded-lg transition-colors ${
-              (isScheduleComplete() && !schedule.saved) ||
-              (schedule.saved && hasUnsavedChanges())
-                ? "bg-[#1D2025] text-white hover:bg-gray-800"
-                : "bg-button-disabled-bg text-button-disabled-text cursor-not-allowed"
+              !schedule.enabled
+                ? "bg-[#CCD1D8] text-[#95A0AC] cursor-not-allowed"
+                : (isScheduleComplete() && !schedule.saved) ||
+                    (schedule.saved && hasUnsavedChanges())
+                  ? "bg-[#1D2025] text-white hover:bg-gray-800"
+                  : "bg-button-disabled-bg text-button-disabled-text cursor-not-allowed"
             }`}
             disabled={
-              !isScheduleComplete() || (schedule.saved && !hasUnsavedChanges())
+              !schedule.enabled ||
+              !isScheduleComplete() ||
+              (schedule.saved && !hasUnsavedChanges())
             }
             onClick={
-              (isScheduleComplete() && !schedule.saved) ||
-              (schedule.saved && hasUnsavedChanges())
+              schedule.enabled &&
+              ((isScheduleComplete() && !schedule.saved) ||
+                (schedule.saved && hasUnsavedChanges()))
                 ? handleSave
                 : undefined
             }
