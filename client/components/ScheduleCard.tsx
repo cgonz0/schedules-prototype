@@ -30,6 +30,7 @@ export function ScheduleCard({
   onDelete,
 }: ScheduleCardProps) {
   const [showSuccessBanner, setShowSuccessBanner] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [originalSchedule, setOriginalSchedule] = useState<Schedule | null>(
     null,
   );
@@ -266,58 +267,193 @@ export function ScheduleCard({
             checked={schedule.enabled}
             onCheckedChange={(enabled) => handleUpdate({ enabled })}
           />
-          <ChevronUp className="w-5 h-5 text-foreground" />
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="p-1 hover:bg-gray-100 rounded transition-colors"
+          >
+            {isCollapsed ? (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                className="w-5 h-5 text-foreground"
+              >
+                <path
+                  d="M2.16651 7.90885C2.16607 8.05697 2.22279 8.19916 2.3241 8.30392L10.1376 16.3273C10.3478 16.544 10.688 16.544 10.8982 16.3273L18.6706 8.27812C18.8095 8.13815 18.8648 7.93172 18.8154 7.73781C18.7659 7.54389 18.6193 7.39247 18.4317 7.34148C18.244 7.29049 18.0444 7.34781 17.909 7.49151L10.5154 15.1461L3.08416 7.51428C2.92993 7.35601 2.69875 7.30912 2.49809 7.3954C2.29742 7.48168 2.16663 7.68421 2.16651 7.90885Z"
+                  fill="currentColor"
+                />
+              </svg>
+            ) : (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                className="w-5 h-5 text-foreground"
+              >
+                <path
+                  d="M18.6889 15.5554C18.5147 15.7058 18.2516 15.6866 18.1012 15.5124L10.4998 6.71089L2.89852 15.5124C2.74811 15.6866 2.48499 15.7058 2.31083 15.5554C2.13668 15.405 2.11743 15.1419 2.26783 14.9677L10.0268 5.98364C10.2761 5.69499 10.7236 5.69499 10.9729 5.98364L18.7319 14.9677C18.8823 15.1419 18.863 15.405 18.6889 15.5554Z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
+          </button>
         </div>
       </div>
 
       {/* Controls Section */}
-      <div
-        className={`space-y-4 ${!schedule.enabled ? "opacity-50 pointer-events-none" : ""}`}
-      >
-        {/* Mode Selection */}
-        <div className="space-y-2.5">
-          <label
-            className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
-          >
-            Mode
-          </label>
-          <ModeSelector
-            selectedMode={schedule.mode}
-            onModeSelect={(mode) => {
-              if (!schedule.enabled) return;
-              // Set default temperature when mode is selected
-              const updates: Partial<Schedule> = { mode };
-              if (mode === "cool" && !schedule.temperature) {
-                updates.temperature = 73;
-              } else if (mode === "heat" && !schedule.temperature) {
-                updates.temperature = 68;
-              } else if (mode === "auto" && !schedule.temperature) {
-                updates.temperature = 70;
-              } else if (mode === "off") {
-                updates.temperature = null;
-              }
-              handleUpdate(updates);
-            }}
-          />
-        </div>
-
-        {/* Temperature Controls */}
-        {schedule.mode && schedule.mode !== "off" && (
+      {!isCollapsed && (
+        <div
+          className={`space-y-4 ${!schedule.enabled ? "opacity-50 pointer-events-none" : ""}`}
+        >
+          {/* Mode Selection */}
           <div className="space-y-2.5">
             <label
               className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
             >
-              Temperature
+              Mode
             </label>
-            <div className="flex gap-3">
-              {schedule.mode === "auto" ? (
-                <>
-                  {/* Heat Control */}
+            <ModeSelector
+              selectedMode={schedule.mode}
+              onModeSelect={(mode) => {
+                if (!schedule.enabled) return;
+                // Set default temperature when mode is selected
+                const updates: Partial<Schedule> = { mode };
+                if (mode === "cool" && !schedule.temperature) {
+                  updates.temperature = 73;
+                } else if (mode === "heat" && !schedule.temperature) {
+                  updates.temperature = 68;
+                } else if (mode === "auto" && !schedule.temperature) {
+                  updates.temperature = 70;
+                } else if (mode === "off") {
+                  updates.temperature = null;
+                }
+                handleUpdate(updates);
+              }}
+            />
+          </div>
+
+          {/* Temperature Controls */}
+          {schedule.mode && schedule.mode !== "off" && (
+            <div className="space-y-2.5">
+              <label
+                className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
+              >
+                Temperature
+              </label>
+              <div className="flex gap-3">
+                {schedule.mode === "auto" ? (
+                  <>
+                    {/* Heat Control */}
+                    <div className="flex-1 h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
+                      <button
+                        onClick={() => {
+                          const currentHeat = 68;
+                          const newTemp = Math.max(50, currentHeat - 1);
+                          handleUpdate({ temperature: newTemp });
+                        }}
+                        className="p-0 hover:bg-gray-200 rounded transition-colors"
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M1.66675 7.25241C1.66631 7.40053 1.72303 7.54272 1.82434 7.64748L9.63785 15.6708C9.848 15.8876 10.1883 15.8876 10.3984 15.6708L18.1708 7.62169C18.3098 7.48171 18.3651 7.27529 18.3156 7.08137C18.2662 6.88745 18.1196 6.73604 17.9319 6.68505C17.7443 6.63406 17.5446 6.69138 17.4093 6.83508L10.0157 14.4897L2.5844 6.85785C2.43017 6.69958 2.19899 6.65269 1.99833 6.73897C1.79766 6.82525 1.66687 7.02778 1.66675 7.25241Z"
+                            fill="#E96549"
+                          />
+                        </svg>
+                      </button>
+                      <span
+                        className="text-base font-semibold"
+                        style={{ color: "#A23110" }}
+                      >
+                        68°
+                      </span>
+                      <button
+                        onClick={() => {
+                          const currentHeat = 68;
+                          const newTemp = Math.min(85, currentHeat + 1);
+                          handleUpdate({ temperature: newTemp });
+                        }}
+                        className="p-0 hover:bg-gray-200 rounded transition-colors"
+                      >
+                        <svg
+                          width="21"
+                          height="20"
+                          viewBox="0 0 21 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M2.16675 14.4143C2.16631 14.2661 2.22303 14.1239 2.32434 14.0192L10.1379 5.99582C10.348 5.77906 10.6883 5.77906 10.8984 5.99582L18.6708 14.045C18.8097 14.185 18.8651 14.3914 18.8156 14.5853C18.7662 14.7792 18.6196 14.9306 18.4319 14.9816C18.2443 15.0326 18.0446 14.9753 17.9093 14.8316L10.5157 7.17699L3.0844 14.8088C2.93017 14.9671 2.69899 15.014 2.49833 14.9277C2.29766 14.8414 2.16687 14.6389 2.16675 14.4143Z"
+                            fill="#E96549"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {/* Cool Control */}
+                    <div className="flex-1 h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
+                      <button
+                        onClick={() => {
+                          const currentCool = 75;
+                          const newTemp = Math.max(65, currentCool - 1);
+                          handleUpdate({ temperature: newTemp });
+                        }}
+                        className="p-0 hover:bg-gray-200 rounded transition-colors"
+                      >
+                        <svg
+                          width="21"
+                          height="20"
+                          viewBox="0 0 21 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M2.16675 7.25241C2.16631 7.40053 2.22303 7.54272 2.32434 7.64748L10.1379 15.6708C10.348 15.8876 10.6883 15.8876 10.8984 15.6708L18.6708 7.62169C18.8098 7.48171 18.3651 7.27529 18.3156 7.08137C18.2662 6.88745 18.1196 6.73604 18.4319 6.68505C18.2443 6.63406 18.0446 6.69138 17.9093 6.83508L10.5157 14.4897L3.0844 6.85785C2.93017 6.69958 2.69899 6.65269 2.49833 6.73897C2.29766 6.82525 2.16687 7.02778 2.16675 7.25241Z"
+                            fill="#1772D6"
+                          />
+                        </svg>
+                      </button>
+                      <span
+                        className="text-base font-semibold"
+                        style={{ color: "#1772D6" }}
+                      >
+                        75°F
+                      </span>
+                      <button
+                        onClick={() => {
+                          const currentCool = 75;
+                          const newTemp = Math.min(90, currentCool + 1);
+                          handleUpdate({ temperature: newTemp });
+                        }}
+                        className="p-0 hover:bg-gray-200 rounded transition-colors"
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M1.66675 14.4143C1.66631 14.2661 1.72303 14.1239 1.82434 14.0192L9.63785 5.99582C9.848 5.77906 10.1883 5.77906 10.3984 5.99582L18.1708 14.045C18.3097 14.185 18.3651 14.3914 18.3156 14.5853C18.2662 14.7792 18.1196 14.9306 17.9319 14.9816C17.7443 15.0326 17.5446 14.9753 17.4093 14.8316L10.0157 7.17699L2.5844 14.8088C2.93017 14.9671 2.69899 15.014 2.49833 14.9277C2.29766 14.8414 2.16687 14.6389 2.16675 14.4143Z"
+                            fill="#1772D6"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  // Single mode control for heat or cool
                   <div className="flex-1 h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
                     <button
                       onClick={() => {
-                        const currentHeat = 68;
-                        const newTemp = Math.max(50, currentHeat - 1);
+                        const currentTemp =
+                          schedule.temperature ||
+                          (schedule.mode === "cool" ? 73 : 68);
+                        const newTemp = Math.max(50, currentTemp - 1);
                         handleUpdate({ temperature: newTemp });
                       }}
                       className="p-0 hover:bg-gray-200 rounded transition-colors"
@@ -330,70 +466,28 @@ export function ScheduleCard({
                       >
                         <path
                           d="M1.66675 7.25241C1.66631 7.40053 1.72303 7.54272 1.82434 7.64748L9.63785 15.6708C9.848 15.8876 10.1883 15.8876 10.3984 15.6708L18.1708 7.62169C18.3098 7.48171 18.3651 7.27529 18.3156 7.08137C18.2662 6.88745 18.1196 6.73604 17.9319 6.68505C17.7443 6.63406 17.5446 6.69138 17.4093 6.83508L10.0157 14.4897L2.5844 6.85785C2.43017 6.69958 2.19899 6.65269 1.99833 6.73897C1.79766 6.82525 1.66687 7.02778 1.66675 7.25241Z"
-                          fill="#E96549"
+                          fill={
+                            schedule.mode === "cool" ? "#1772D6" : "#E96549"
+                          }
                         />
                       </svg>
                     </button>
                     <span
                       className="text-base font-semibold"
-                      style={{ color: "#A23110" }}
+                      style={{
+                        color: schedule.mode === "cool" ? "#1772D6" : "#A23110",
+                      }}
                     >
-                      68°
+                      {schedule.temperature ||
+                        (schedule.mode === "cool" ? 73 : 68)}
+                      °{schedule.mode === "cool" ? "F" : ""}
                     </span>
                     <button
                       onClick={() => {
-                        const currentHeat = 68;
-                        const newTemp = Math.min(85, currentHeat + 1);
-                        handleUpdate({ temperature: newTemp });
-                      }}
-                      className="p-0 hover:bg-gray-200 rounded transition-colors"
-                    >
-                      <svg
-                        width="21"
-                        height="20"
-                        viewBox="0 0 21 20"
-                        fill="none"
-                      >
-                        <path
-                          d="M2.16675 14.4143C2.16631 14.2661 2.22303 14.1239 2.32434 14.0192L10.1379 5.99582C10.348 5.77906 10.6883 5.77906 10.8984 5.99582L18.6708 14.045C18.8097 14.185 18.8651 14.3914 18.8156 14.5853C18.7662 14.7792 18.6196 14.9306 18.4319 14.9816C18.2443 15.0326 18.0446 14.9753 17.9093 14.8316L10.5157 7.17699L3.0844 14.8088C2.93017 14.9671 2.69899 15.014 2.49833 14.9277C2.29766 14.8414 2.16687 14.6389 2.16675 14.4143Z"
-                          fill="#E96549"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-
-                  {/* Cool Control */}
-                  <div className="flex-1 h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
-                    <button
-                      onClick={() => {
-                        const currentCool = 75;
-                        const newTemp = Math.max(65, currentCool - 1);
-                        handleUpdate({ temperature: newTemp });
-                      }}
-                      className="p-0 hover:bg-gray-200 rounded transition-colors"
-                    >
-                      <svg
-                        width="21"
-                        height="20"
-                        viewBox="0 0 21 20"
-                        fill="none"
-                      >
-                        <path
-                          d="M2.16675 7.25241C2.16631 7.40053 2.22303 7.54272 2.32434 7.64748L10.1379 15.6708C10.348 15.8876 10.6883 15.8876 10.8984 15.6708L18.6708 7.62169C18.8098 7.48171 18.3651 7.27529 18.3156 7.08137C18.2662 6.88745 18.1196 6.73604 18.4319 6.68505C18.2443 6.63406 18.0446 6.69138 17.9093 6.83508L10.5157 14.4897L3.0844 6.85785C2.93017 6.69958 2.69899 6.65269 2.49833 6.73897C2.29766 6.82525 2.16687 7.02778 2.16675 7.25241Z"
-                          fill="#1772D6"
-                        />
-                      </svg>
-                    </button>
-                    <span
-                      className="text-base font-semibold"
-                      style={{ color: "#1772D6" }}
-                    >
-                      75°F
-                    </span>
-                    <button
-                      onClick={() => {
-                        const currentCool = 75;
-                        const newTemp = Math.min(90, currentCool + 1);
+                        const currentTemp =
+                          schedule.temperature ||
+                          (schedule.mode === "cool" ? 73 : 68);
+                        const newTemp = Math.min(90, currentTemp + 1);
                         handleUpdate({ temperature: newTemp });
                       }}
                       className="p-0 hover:bg-gray-200 rounded transition-colors"
@@ -406,157 +500,111 @@ export function ScheduleCard({
                       >
                         <path
                           d="M1.66675 14.4143C1.66631 14.2661 1.72303 14.1239 1.82434 14.0192L9.63785 5.99582C9.848 5.77906 10.1883 5.77906 10.3984 5.99582L18.1708 14.045C18.3097 14.185 18.3651 14.3914 18.3156 14.5853C18.2662 14.7792 18.1196 14.9306 17.9319 14.9816C17.7443 15.0326 17.5446 14.9753 17.4093 14.8316L10.0157 7.17699L2.5844 14.8088C2.93017 14.9671 2.69899 15.014 2.49833 14.9277C2.29766 14.8414 2.16687 14.6389 2.16675 14.4143Z"
-                          fill="#1772D6"
+                          fill={
+                            schedule.mode === "cool" ? "#1772D6" : "#E96549"
+                          }
                         />
                       </svg>
                     </button>
                   </div>
-                </>
-              ) : (
-                // Single mode control for heat or cool
-                <div className="flex-1 h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
-                  <button
-                    onClick={() => {
-                      const currentTemp =
-                        schedule.temperature ||
-                        (schedule.mode === "cool" ? 73 : 68);
-                      const newTemp = Math.max(50, currentTemp - 1);
-                      handleUpdate({ temperature: newTemp });
-                    }}
-                    className="p-0 hover:bg-gray-200 rounded transition-colors"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path
-                        d="M1.66675 7.25241C1.66631 7.40053 1.72303 7.54272 1.82434 7.64748L9.63785 15.6708C9.848 15.8876 10.1883 15.8876 10.3984 15.6708L18.1708 7.62169C18.3098 7.48171 18.3651 7.27529 18.3156 7.08137C18.2662 6.88745 18.1196 6.73604 17.9319 6.68505C17.7443 6.63406 17.5446 6.69138 17.4093 6.83508L10.0157 14.4897L2.5844 6.85785C2.43017 6.69958 2.19899 6.65269 1.99833 6.73897C1.79766 6.82525 1.66687 7.02778 1.66675 7.25241Z"
-                        fill={schedule.mode === "cool" ? "#1772D6" : "#E96549"}
-                      />
-                    </svg>
-                  </button>
-                  <span
-                    className="text-base font-semibold"
-                    style={{
-                      color: schedule.mode === "cool" ? "#1772D6" : "#A23110",
-                    }}
-                  >
-                    {schedule.temperature ||
-                      (schedule.mode === "cool" ? 73 : 68)}
-                    °{schedule.mode === "cool" ? "F" : ""}
-                  </span>
-                  <button
-                    onClick={() => {
-                      const currentTemp =
-                        schedule.temperature ||
-                        (schedule.mode === "cool" ? 73 : 68);
-                      const newTemp = Math.min(90, currentTemp + 1);
-                      handleUpdate({ temperature: newTemp });
-                    }}
-                    className="p-0 hover:bg-gray-200 rounded transition-colors"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path
-                        d="M1.66675 14.4143C1.66631 14.2661 1.72303 14.1239 1.82434 14.0192L9.63785 5.99582C9.848 5.77906 10.1883 5.77906 10.3984 5.99582L18.1708 14.045C18.3097 14.185 18.3651 14.3914 18.3156 14.5853C18.2662 14.7792 18.1196 14.9306 17.9319 14.9816C17.7443 15.0326 17.5446 14.9753 17.4093 14.8316L10.0157 7.17699L2.5844 14.8088C2.93017 14.9671 2.69899 15.014 2.49833 14.9277C2.29766 14.8414 2.16687 14.6389 2.16675 14.4143Z"
-                        fill={schedule.mode === "cool" ? "#1772D6" : "#E96549"}
-                      />
-                    </svg>
-                  </button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Fan Mode Selection */}
-        <div className="space-y-2.5">
-          <label
-            className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
-          >
-            Fan Mode
-          </label>
-          <div className="flex gap-1">
-            <button
-              className={`flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold transition-colors ${
-                schedule.fanMode === "auto"
-                  ? "bg-foreground text-primary-foreground"
-                  : "bg-secondary text-foreground"
-              }`}
-              onClick={() => handleUpdate({ fanMode: "auto" })}
-            >
-              <FanAutoIcon />
-              Auto
-            </button>
-            <button
-              className={`flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold transition-colors ${
-                schedule.fanMode === "on"
-                  ? "bg-foreground text-primary-foreground"
-                  : "bg-secondary text-foreground"
-              }`}
-              onClick={() => handleUpdate({ fanMode: "on" })}
-            >
-              <FanOnIcon />
-              On
-            </button>
-          </div>
-        </div>
-
-        {/* Schedule Details */}
-        <div className="space-y-6 pt-2">
+          {/* Fan Mode Selection */}
           <div className="space-y-2.5">
             <label
               className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
             >
-              Schedule
+              Fan Mode
             </label>
-            <div className="space-y-4">
-              <WeekdayPicker
-                selectedDays={schedule.days}
-                onDaysChange={(days) => handleUpdate({ days })}
-              />
-              <TimeInput
-                time={schedule.time}
-                onTimeChange={(time) => handleUpdate({ time })}
-              />
+            <div className="flex gap-1">
+              <button
+                className={`flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold transition-colors ${
+                  schedule.fanMode === "auto"
+                    ? "bg-foreground text-primary-foreground"
+                    : "bg-secondary text-foreground"
+                }`}
+                onClick={() => handleUpdate({ fanMode: "auto" })}
+              >
+                <FanAutoIcon />
+                Auto
+              </button>
+              <button
+                className={`flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold transition-colors ${
+                  schedule.fanMode === "on"
+                    ? "bg-foreground text-primary-foreground"
+                    : "bg-secondary text-foreground"
+                }`}
+                onClick={() => handleUpdate({ fanMode: "on" })}
+              >
+                <FanOnIcon />
+                On
+              </button>
+            </div>
+          </div>
+
+          {/* Schedule Details */}
+          <div className="space-y-6 pt-2">
+            <div className="space-y-2.5">
+              <label
+                className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
+              >
+                Schedule
+              </label>
+              <div className="space-y-4">
+                <WeekdayPicker
+                  selectedDays={schedule.days}
+                  onDaysChange={(days) => handleUpdate({ days })}
+                />
+                <TimeInput
+                  time={schedule.time}
+                  onTimeChange={(time) => handleUpdate({ time })}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="pt-4 space-y-4">
+            <button
+              className={`w-full h-10 px-6 font-semibold rounded-lg transition-colors ${
+                !schedule.enabled
+                  ? "bg-[#CCD1D8] text-[#95A0AC] cursor-not-allowed"
+                  : (isScheduleComplete() && !schedule.saved) ||
+                      (schedule.saved && hasUnsavedChanges())
+                    ? "bg-[#1D2025] text-white hover:bg-gray-800"
+                    : "bg-button-disabled-bg text-button-disabled-text cursor-not-allowed"
+              }`}
+              disabled={
+                !schedule.enabled ||
+                !isScheduleComplete() ||
+                (schedule.saved && !hasUnsavedChanges())
+              }
+              onClick={
+                schedule.enabled &&
+                ((isScheduleComplete() && !schedule.saved) ||
+                  (schedule.saved && hasUnsavedChanges()))
+                  ? handleSave
+                  : undefined
+              }
+            >
+              Save Changes
+            </button>
+
+            <div className="flex justify-center">
+              <button
+                className="flex items-center gap-3 px-6 py-1 text-destructive font-semibold rounded-2xl hover:bg-red-50 transition-colors"
+                onClick={onDelete}
+              >
+                <Trash2 className="w-5 h-5" />
+                Delete Schedule
+              </button>
             </div>
           </div>
         </div>
-
-        {/* Action Buttons */}
-        <div className="pt-4 space-y-4">
-          <button
-            className={`w-full h-10 px-6 font-semibold rounded-lg transition-colors ${
-              !schedule.enabled
-                ? "bg-[#CCD1D8] text-[#95A0AC] cursor-not-allowed"
-                : (isScheduleComplete() && !schedule.saved) ||
-                    (schedule.saved && hasUnsavedChanges())
-                  ? "bg-[#1D2025] text-white hover:bg-gray-800"
-                  : "bg-button-disabled-bg text-button-disabled-text cursor-not-allowed"
-            }`}
-            disabled={
-              !schedule.enabled ||
-              !isScheduleComplete() ||
-              (schedule.saved && !hasUnsavedChanges())
-            }
-            onClick={
-              schedule.enabled &&
-              ((isScheduleComplete() && !schedule.saved) ||
-                (schedule.saved && hasUnsavedChanges()))
-                ? handleSave
-                : undefined
-            }
-          >
-            Save Changes
-          </button>
-
-          <div className="flex justify-center">
-            <button
-              className="flex items-center gap-3 px-6 py-1 text-destructive font-semibold rounded-2xl hover:bg-red-50 transition-colors"
-              onClick={onDelete}
-            >
-              <Trash2 className="w-5 h-5" />
-              Delete Schedule
-            </button>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
