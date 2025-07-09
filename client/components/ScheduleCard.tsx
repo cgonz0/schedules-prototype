@@ -212,8 +212,8 @@ export function ScheduleCard({
       {/* Summary Section */}
       <div className="flex items-start justify-between mb-6">
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-3 min-h-[24px]">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3 h-6">
+            <div className="flex items-center gap-2 h-6">
               {status.badge && <ScheduleBadge mode={status.badge} />}
               <span
                 className="text-sm font-semibold uppercase tracking-wide leading-6"
@@ -228,22 +228,24 @@ export function ScheduleCard({
                 {status.text}
               </span>
             </div>
-            {!schedule.enabled && (
-              <div className="px-5 py-0.5 bg-[#D9EBFC] rounded-full">
-                <span className="text-xs font-semibold text-[#034F8C] leading-5">
-                  Paused
-                </span>
-              </div>
-            )}
-            {schedule.isDraft && schedule.enabled && (
-              <div className="px-5 py-0.5 bg-[#FAE5C6] rounded-full">
-                <span className="text-xs font-semibold text-[#663500] leading-5">
-                  Draft
-                </span>
-              </div>
-            )}
+            <div className="flex items-center h-6">
+              {!schedule.enabled && (
+                <div className="px-5 py-0.5 bg-[#D9EBFC] rounded-full h-5 flex items-center">
+                  <span className="text-xs font-semibold text-[#034F8C] leading-none">
+                    Paused
+                  </span>
+                </div>
+              )}
+              {schedule.isDraft && schedule.enabled && (
+                <div className="px-5 py-0.5 bg-[#FAE5C6] rounded-full h-5 flex items-center">
+                  <span className="text-xs font-semibold text-[#663500] leading-none">
+                    Draft
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="flex items-center gap-1 text-sm text-foreground leading-5 min-h-[20px]">
+          <div className="flex items-center gap-1 text-sm text-foreground leading-5 h-5">
             <span>
               {formatDays(
                 originalSchedule && schedule.saved
