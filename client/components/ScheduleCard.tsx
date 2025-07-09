@@ -64,7 +64,11 @@ export function ScheduleCard({
   };
 
   const getScheduleStatus = () => {
-    if (!schedule.mode) {
+    // Use original schedule for summary if it exists (during editing), otherwise use current schedule
+    const displaySchedule =
+      originalSchedule && schedule.saved ? originalSchedule : schedule;
+
+    if (!displaySchedule.mode) {
       return {
         text: "NO MODE SELECTED",
         badge: null,
@@ -72,34 +76,34 @@ export function ScheduleCard({
       };
     }
 
-    if (schedule.mode === "cool" && schedule.temperature) {
+    if (displaySchedule.mode === "cool" && displaySchedule.temperature) {
       return {
-        text: `COOL TO ${schedule.temperature}°`,
-        badge: schedule.mode,
+        text: `COOL TO ${displaySchedule.temperature}°`,
+        badge: displaySchedule.mode,
         color: "#1772D6",
       };
     }
 
-    if (schedule.mode === "heat" && schedule.temperature) {
+    if (displaySchedule.mode === "heat" && displaySchedule.temperature) {
       return {
-        text: `HEAT TO ${schedule.temperature}°`,
-        badge: schedule.mode,
+        text: `HEAT TO ${displaySchedule.temperature}°`,
+        badge: displaySchedule.mode,
         color: "#A23110",
       };
     }
 
-    if (schedule.mode === "auto") {
+    if (displaySchedule.mode === "auto") {
       return {
         text: "AUTO 68-75°",
-        badge: schedule.mode,
+        badge: displaySchedule.mode,
         color: "#9D4BB5",
       };
     }
 
-    if (schedule.mode === "off") {
+    if (displaySchedule.mode === "off") {
       return {
         text: "OFF",
-        badge: schedule.mode,
+        badge: displaySchedule.mode,
         color: "text-foreground",
       };
     }
@@ -231,15 +235,31 @@ export function ScheduleCard({
             )}
           </div>
           <div className="flex items-center gap-1 text-sm text-foreground">
-            <span>{formatDays(schedule.days)}</span>
+            <span>
+              {formatDays(
+                originalSchedule && schedule.saved
+                  ? originalSchedule.days
+                  : schedule.days,
+              )}
+            </span>
             <span className="font-semibold">•</span>
-            <span>{formatTime(schedule.time)}</span>
+            <span>
+              {formatTime(
+                originalSchedule && schedule.saved
+                  ? originalSchedule.time
+                  : schedule.time,
+              )}
+            </span>
           </div>
         </div>
 
         <div className="flex flex-col items-center gap-3">
           <Switch
-            checked={schedule.enabled}
+            checked={
+              originalSchedule && schedule.saved
+                ? originalSchedule.enabled
+                : schedule.enabled
+            }
             onCheckedChange={(enabled) => handleUpdate({ enabled })}
           />
           <ChevronUp className="w-5 h-5 text-foreground" />
