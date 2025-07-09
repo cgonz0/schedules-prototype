@@ -210,7 +210,9 @@ export function ScheduleCard({
         </div>
       )}
       {/* Summary Section */}
-      <div className="flex items-start justify-between mb-4">
+      <div
+        className={`flex items-start justify-between ${isCollapsed ? "mb-2" : "mb-4"}`}
+      >
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3 h-6">
             <div className="flex items-center gap-2 h-6">
