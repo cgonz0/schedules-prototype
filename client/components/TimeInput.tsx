@@ -37,7 +37,7 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
 
   return (
     <div className="relative">
-      <div className="border border-border rounded-lg p-4 bg-input">
+      <div className="border border-border rounded-lg p-3 bg-input h-14">
         <div className="flex flex-col gap-2">
           <label className="text-sm font-semibold text-muted-foreground">
             Time
