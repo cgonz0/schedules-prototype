@@ -70,11 +70,11 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Away Mode Bar */}
-          <AwayModeBar />
-
           {/* Schedules Section */}
           <div className="flex-1 overflow-y-auto p-4">
+            {/* Away Mode Bar */}
+            <AwayModeBar />
+
             <h2 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-4 font-rubik">
               SCHEDULES
             </h2>
