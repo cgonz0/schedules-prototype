@@ -340,11 +340,6 @@ export function ScheduleCard({
             {/* Temperature Controls */}
             {schedule.mode && schedule.mode !== "off" && (
               <div className="space-y-2.5">
-                <label
-                  className={`text-sm font-semibold ${!schedule.enabled ? "text-gray-400" : "text-muted-foreground"}`}
-                >
-                  Temperature
-                </label>
                 <div className="flex gap-3">
                   {schedule.mode === "auto" ? (
                     <>
