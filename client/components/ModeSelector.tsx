@@ -1,5 +1,3 @@
-import { Snowflake, Flame, Power } from "lucide-react";
-
 interface ModeSelectorProps {
   selectedMode: string | null;
   onModeSelect: (mode: string) => void;
@@ -18,17 +16,17 @@ export function ModeSelector({
     {
       id: "cool",
       label: "Cool",
-      icon: () => <Snowflake className="w-4 h-4" />,
+      icon: CoolIcon,
     },
     {
       id: "heat",
       label: "Heat",
-      icon: () => <Flame className="w-4 h-4" />,
+      icon: HeatIcon,
     },
     {
       id: "off",
       label: "Off",
-      icon: () => <Power className="w-4 h-4" />,
+      icon: OffIcon,
     },
   ];
 
