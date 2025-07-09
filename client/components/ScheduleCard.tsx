@@ -153,7 +153,9 @@ export function ScheduleCard({
                 updates.temperature = 73;
               } else if (mode === "heat" && !schedule.temperature) {
                 updates.temperature = 68;
-              } else if (mode === "off" || mode === "auto") {
+              } else if (mode === "auto" && !schedule.temperature) {
+                updates.temperature = 70;
+              } else if (mode === "off") {
                 updates.temperature = null;
               }
               onUpdate(updates);
