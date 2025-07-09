@@ -42,6 +42,7 @@ export function ScheduleCard({
   });
   const formatDays = (days: string[]) => {
     if (days.length === 0) return "No days selected";
+    if (days.length === 7) return "Everyday";
     const dayNames = {
       sun: "Sun",
       mon: "Mon",
