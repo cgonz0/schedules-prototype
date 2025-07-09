@@ -99,6 +99,22 @@ export function ScheduleCard({
 
   const status = getScheduleStatus();
 
+  // Check if schedule is complete and can be saved
+  const isScheduleComplete = () => {
+    return (
+      schedule.mode &&
+      schedule.mode !== null &&
+      schedule.days.length > 0 &&
+      schedule.time.hour &&
+      schedule.time.minute
+    );
+  };
+
+  const handleSave = () => {
+    // Mark the schedule as saved/complete by updating it
+    onUpdate({ saved: true });
+  };
+
   return (
     <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
       {/* Summary Section */}
@@ -352,8 +368,13 @@ export function ScheduleCard({
         {/* Action Buttons */}
         <div className="pt-4 space-y-4">
           <button
-            className="w-full h-10 px-6 bg-button-disabled-bg text-button-disabled-text font-semibold rounded-lg cursor-not-allowed"
-            disabled
+            className={`w-full h-10 px-6 font-semibold rounded-lg transition-colors ${
+              isScheduleComplete()
+                ? "bg-[#32BDCD] text-black hover:bg-[#2BA8B7]"
+                : "bg-button-disabled-bg text-button-disabled-text cursor-not-allowed"
+            }`}
+            disabled={!isScheduleComplete()}
+            onClick={isScheduleComplete() ? handleSave : undefined}
           >
             Save Changes
           </button>
