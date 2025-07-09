@@ -220,7 +220,7 @@ export function ScheduleCard({
             Save Changes
           </button>
 
-          <div className="pl-1">
+          <div className="flex justify-center">
             <button
               className="flex items-center gap-3 px-6 py-1 text-destructive font-semibold rounded-2xl hover:bg-red-50 transition-colors"
               onClick={onDelete}
