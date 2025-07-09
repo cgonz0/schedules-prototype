@@ -37,8 +37,22 @@ export default function Index() {
     setSchedules((prev) => prev.filter((schedule) => schedule.id !== id));
   };
 
+  const createNewSchedule = () => {
+    const newId = Math.max(...schedules.map((s) => s.id), 0) + 1;
+    const newSchedule = {
+      id: newId,
+      mode: null,
+      temperature: null,
+      days: [],
+      time: { hour: "", minute: "", period: "AM" },
+      enabled: false,
+      fanMode: "auto",
+    };
+    setSchedules((prev) => [...prev, newSchedule]);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 relative">
       <div className="w-full max-w-sm bg-white rounded-t-[10px] shadow-lg overflow-hidden">
         {/* Modal Header */}
         <div className="flex items-center justify-center h-11 px-4 bg-white border-b border-gray-100">
