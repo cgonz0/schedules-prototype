@@ -22,6 +22,7 @@ interface Schedule {
 
 interface ScheduleCardProps {
   schedule: Schedule;
+  isAwayModeActive?: boolean;
   onUpdate: (updates: Partial<Schedule>) => void;
   onDelete: () => void;
 }
