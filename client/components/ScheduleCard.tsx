@@ -235,11 +235,11 @@ export function ScheduleCard({
               )}
               <span
                 className={`text-sm font-semibold uppercase tracking-wide leading-6 ${
-                  isAwayModeActive && isCollapsed ? "text-[#95A0AC]" : ""
+                  isAwayModeActive ? "text-[#95A0AC]" : ""
                 }`}
                 style={{
                   color:
-                    !(isAwayModeActive && isCollapsed) &&
+                    !isAwayModeActive &&
                     typeof status.color === "string" &&
                     status.color.startsWith("#")
                       ? status.color
