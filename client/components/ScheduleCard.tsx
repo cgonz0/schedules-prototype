@@ -142,6 +142,8 @@ export function ScheduleCard({
     return (
       originalSchedule.mode !== schedule.mode ||
       originalSchedule.temperature !== schedule.temperature ||
+      originalSchedule.heatTemp !== schedule.heatTemp ||
+      originalSchedule.coolTemp !== schedule.coolTemp ||
       JSON.stringify(originalSchedule.days) !== JSON.stringify(schedule.days) ||
       JSON.stringify(originalSchedule.time) !== JSON.stringify(schedule.time) ||
       originalSchedule.fanMode !== schedule.fanMode ||
