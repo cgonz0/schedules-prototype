@@ -332,8 +332,10 @@ export function ScheduleCard({
                     updates.temperature = 73;
                   } else if (mode === "heat" && !schedule.temperature) {
                     updates.temperature = 68;
-                  } else if (mode === "auto" && !schedule.temperature) {
-                    updates.temperature = 70;
+                  } else if (mode === "auto") {
+                    // Set default heat and cool temperatures for auto mode
+                    if (!schedule.heatTemp) updates.heatTemp = 68;
+                    if (!schedule.coolTemp) updates.coolTemp = 75;
                   } else if (mode === "off") {
                     updates.temperature = null;
                   }
