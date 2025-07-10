@@ -4,6 +4,7 @@ import { ScheduleCard } from "../components/ScheduleCard";
 import { AwayModeBar } from "../components/AwayModeBar";
 
 export default function Index() {
+  const [isAwayMode, setIsAwayMode] = useState(false);
   const [schedules, setSchedules] = useState([
     {
       id: 1,
