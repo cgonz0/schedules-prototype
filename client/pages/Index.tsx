@@ -74,7 +74,7 @@ export default function Index() {
           {/* Schedules Section */}
           <div className="flex-1 overflow-y-auto p-4">
             {/* Away Mode Bar */}
-            <AwayModeBar />
+            <AwayModeBar isAwayMode={isAwayMode} onToggle={setIsAwayMode} />
 
             <h2 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-4 font-rubik">
               SCHEDULES
@@ -85,6 +85,7 @@ export default function Index() {
                 <ScheduleCard
                   key={schedule.id}
                   schedule={schedule}
+                  isAwayModeActive={isAwayMode}
                   onUpdate={(updates) => updateSchedule(schedule.id, updates)}
                   onDelete={() => deleteSchedule(schedule.id)}
                 />
