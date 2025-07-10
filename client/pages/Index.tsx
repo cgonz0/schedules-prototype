@@ -83,7 +83,7 @@ export default function Index() {
             {schedules.length === 0 ? (
               <div className="flex flex-col items-center gap-10 py-8">
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fac2618f3fd3f41d5b7751e606dc09be1%2Fe0d37abd4bbd4e428fca05c92af09240?format=webp&width=800"
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fac2618f3fd3f41d5b7751e606dc09be1%2F708f518822fc47f582102ed662428101?format=webp&width=800"
                   alt="No schedules illustration"
                   className="w-[186px] h-[379px]"
                 />
