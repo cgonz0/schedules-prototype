@@ -291,11 +291,7 @@ export function ScheduleCard({
 
         <div className="flex flex-col items-center gap-3">
           <div
-            className={
-              isAwayModeActive && isCollapsed
-                ? "opacity-60 pointer-events-none"
-                : ""
-            }
+            className={isAwayModeActive ? "opacity-60 pointer-events-none" : ""}
           >
             <Switch
               checked={schedule.enabled}
