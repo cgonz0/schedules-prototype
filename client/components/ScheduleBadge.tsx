@@ -91,7 +91,9 @@ export function ScheduleBadge({
 
   if (mode === "auto") {
     return (
-      <div className="w-6 h-6 flex items-center justify-center">
+      <div
+        className={`w-6 h-6 flex items-center justify-center ${isAwayModeActive ? "opacity-70" : ""}`}
+      >
         <div
           className="w-6 h-6 rounded-full flex items-center justify-center"
           style={{ backgroundColor: "#F3E9F6" }}
