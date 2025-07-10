@@ -1,18 +1,30 @@
-export function AwayModeBar() {
+interface AwayModeBarProps {
+  isAwayMode: boolean;
+  onToggle: (enabled: boolean) => void;
+}
+
+export function AwayModeBar({ isAwayMode, onToggle }: AwayModeBarProps) {
   return (
     <div className="mx-4 mt-4 mb-6">
-      <div className="flex items-center justify-center gap-3 h-10 px-4 border border-foreground rounded-lg">
+      <button
+        onClick={() => onToggle(!isAwayMode)}
+        className={`w-full flex items-center justify-center gap-3 h-10 px-4 rounded-lg transition-colors ${
+          isAwayMode
+            ? "bg-[#1D2025] text-white"
+            : "border border-foreground text-foreground hover:bg-gray-50"
+        }`}
+      >
         <div className="flex items-center gap-2">
           <AwayModeIcon />
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-foreground">AWAY</span>
-            <span className="text-base font-semibold text-foreground">•</span>
-            <span className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              OFF
+            <span className="text-sm font-semibold">AWAY</span>
+            <span className="text-base font-semibold">•</span>
+            <span className="text-sm font-semibold uppercase tracking-wide">
+              {isAwayMode ? "AUTO 65-80°" : "OFF"}
             </span>
           </div>
         </div>
-      </div>
+      </button>
     </div>
   );
 }
