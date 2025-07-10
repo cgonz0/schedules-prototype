@@ -175,6 +175,8 @@ export function ScheduleCard({
       const willHaveChanges =
         originalSchedule.mode !== newSchedule.mode ||
         originalSchedule.temperature !== newSchedule.temperature ||
+        originalSchedule.heatTemp !== newSchedule.heatTemp ||
+        originalSchedule.coolTemp !== newSchedule.coolTemp ||
         JSON.stringify(originalSchedule.days) !==
           JSON.stringify(newSchedule.days) ||
         JSON.stringify(originalSchedule.time) !==
