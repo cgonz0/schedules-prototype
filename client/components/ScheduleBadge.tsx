@@ -1,8 +1,12 @@
 interface ScheduleBadgeProps {
   mode: string;
+  isAwayModeActive?: boolean;
 }
 
-export function ScheduleBadge({ mode }: ScheduleBadgeProps) {
+export function ScheduleBadge({
+  mode,
+  isAwayModeActive = false,
+}: ScheduleBadgeProps) {
   if (mode === "cool") {
     return (
       <div className="w-6 h-6 flex items-center justify-center">
