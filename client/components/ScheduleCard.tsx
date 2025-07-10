@@ -197,11 +197,7 @@ export function ScheduleCard({
   };
 
   return (
-    <div
-      className={`bg-white rounded-xl p-4 shadow-sm border border-gray-100 relative ${
-        isAwayModeActive ? "opacity-70" : ""
-      }`}
-    >
+    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 relative">
       {/* Success Banner */}
       {showSuccessBanner && (
         <div className="fixed bottom-14 left-0 right-0 z-50 flex justify-center">
