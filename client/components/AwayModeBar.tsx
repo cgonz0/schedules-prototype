@@ -8,7 +8,7 @@ export function AwayModeBar({ isAwayMode, onToggle }: AwayModeBarProps) {
     <>
       <button
         onClick={() => onToggle(!isAwayMode)}
-        className={`w-full flex items-center justify-center gap-3 h-10 px-4 rounded-lg transition-colors ${
+        className={`w-full flex items-center justify-center gap-3 h-10 px-4 rounded-lg transition-colors mb-8 ${
           isAwayMode
             ? "bg-[#1D2025] text-white"
             : "border border-foreground text-foreground hover:bg-gray-50"
