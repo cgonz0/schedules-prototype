@@ -80,17 +80,36 @@ export default function Index() {
               SCHEDULES
             </h2>
 
-            <div className="space-y-4 pb-20">
-              {schedules.map((schedule) => (
-                <ScheduleCard
-                  key={schedule.id}
-                  schedule={schedule}
-                  isAwayModeActive={isAwayMode}
-                  onUpdate={(updates) => updateSchedule(schedule.id, updates)}
-                  onDelete={() => deleteSchedule(schedule.id)}
+            {schedules.length === 0 ? (
+              <div className="flex flex-col items-center gap-10 py-8">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fac2618f3fd3f41d5b7751e606dc09be1%2Fe0d37abd4bbd4e428fca05c92af09240?format=webp&width=800"
+                  alt="No schedules illustration"
+                  className="w-[186px] h-[379px]"
                 />
-              ))}
-            </div>
+                <div className="flex flex-col items-center gap-2 text-center">
+                  <h3 className="text-lg font-semibold text-foreground">
+                    No Schedules set up yet
+                  </h3>
+                  <p className="text-sm text-foreground">
+                    Schedules allow you to automate a device on certain times
+                    and days
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4 pb-20">
+                {schedules.map((schedule) => (
+                  <ScheduleCard
+                    key={schedule.id}
+                    schedule={schedule}
+                    isAwayModeActive={isAwayMode}
+                    onUpdate={(updates) => updateSchedule(schedule.id, updates)}
+                    onDelete={() => deleteSchedule(schedule.id)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
