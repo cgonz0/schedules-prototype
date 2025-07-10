@@ -402,9 +402,9 @@ export function ScheduleCard({
                       <div className="flex-1 h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
                         <button
                           onClick={() => {
-                            const currentCool = 75;
+                            const currentCool = schedule.coolTemp || 75;
                             const newTemp = Math.max(65, currentCool - 1);
-                            handleUpdate({ temperature: newTemp });
+                            handleUpdate({ coolTemp: newTemp });
                           }}
                           className="p-0 hover:bg-gray-200 rounded transition-colors"
                         >
@@ -424,13 +424,13 @@ export function ScheduleCard({
                           className="text-base font-semibold"
                           style={{ color: "#1772D6" }}
                         >
-                          75°F
+                          {schedule.coolTemp || 75}°F
                         </span>
                         <button
                           onClick={() => {
-                            const currentCool = 75;
+                            const currentCool = schedule.coolTemp || 75;
                             const newTemp = Math.min(90, currentCool + 1);
-                            handleUpdate({ temperature: newTemp });
+                            handleUpdate({ coolTemp: newTemp });
                           }}
                           className="p-0 hover:bg-gray-200 rounded transition-colors"
                         >
