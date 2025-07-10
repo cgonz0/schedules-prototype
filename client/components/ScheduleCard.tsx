@@ -67,6 +67,7 @@ export function ScheduleCard({
       return "Weekends";
     }
 
+    const dayOrder = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
     const dayNames = {
       sun: "Sun",
       mon: "Mon",
@@ -76,7 +77,14 @@ export function ScheduleCard({
       fri: "Fri",
       sat: "Sat",
     };
-    return days.map((day) => dayNames[day as keyof typeof dayNames]).join(", ");
+
+    // Sort days according to week order
+    const sortedDays = days.sort(
+      (a, b) => dayOrder.indexOf(a) - dayOrder.indexOf(b),
+    );
+    return sortedDays
+      .map((day) => dayNames[day as keyof typeof dayNames])
+      .join(", ");
   };
 
   const formatTime = (time: {
