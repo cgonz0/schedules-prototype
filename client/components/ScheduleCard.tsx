@@ -668,7 +668,7 @@ export function ScheduleCard({
 
       {/* Delete Confirmation Dialog */}
       {showDeleteDialog && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center p-6">
+        <div className="fixed top-0 left-1/2 transform -translate-x-1/2 w-full max-w-sm h-[800px] z-50 flex items-center justify-center p-6">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/50 backdrop-blur-[10px]"
