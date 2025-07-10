@@ -5,26 +5,7 @@ import { AwayModeBar } from "../components/AwayModeBar";
 
 export default function Index() {
   const [isAwayMode, setIsAwayMode] = useState(false);
-  const [schedules, setSchedules] = useState([
-    {
-      id: 1,
-      mode: null,
-      temperature: null,
-      days: [],
-      time: { hour: "", minute: "", period: "AM" },
-      enabled: false,
-      fanMode: "auto",
-    },
-    {
-      id: 2,
-      mode: "cool",
-      temperature: 73,
-      days: ["mon", "wed", "fri"],
-      time: { hour: "08", minute: "00", period: "AM" },
-      enabled: true,
-      fanMode: "auto",
-    },
-  ]);
+  const [schedules, setSchedules] = useState([]);
 
   const updateSchedule = (id: number, updates: any) => {
     setSchedules((prev) =>
