@@ -5,7 +5,7 @@ interface AwayModeBarProps {
 
 export function AwayModeBar({ isAwayMode, onToggle }: AwayModeBarProps) {
   return (
-    <div className="mx-4 mt-4 mb-6">
+    <>
       <button
         onClick={() => onToggle(!isAwayMode)}
         className={`w-full flex items-center justify-center gap-3 h-10 px-4 rounded-lg transition-colors ${
@@ -25,7 +25,8 @@ export function AwayModeBar({ isAwayMode, onToggle }: AwayModeBarProps) {
           </div>
         </div>
       </button>
-    </div>
+      <div className="mx-4 mt-4 mb-6" />
+    </>
   );
 }
 
