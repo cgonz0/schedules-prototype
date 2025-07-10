@@ -95,8 +95,11 @@ export function ScheduleCard({
     }
 
     if (displaySchedule.mode === "auto") {
+      // For auto mode, we'll use stored heat and cool temps or defaults
+      const heatTemp = displaySchedule.heatTemp || 68;
+      const coolTemp = displaySchedule.coolTemp || 75;
       return {
-        text: "AUTO 68-75°",
+        text: `AUTO ${heatTemp}-${coolTemp}°`,
         badge: displaySchedule.mode,
         color: "#9D4BB5",
       };
