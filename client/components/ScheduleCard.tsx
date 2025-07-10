@@ -29,6 +29,7 @@ interface ScheduleCardProps {
 
 export function ScheduleCard({
   schedule,
+  isAwayModeActive = false,
   onUpdate,
   onDelete,
 }: ScheduleCardProps) {
