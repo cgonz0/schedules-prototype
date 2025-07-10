@@ -230,7 +230,7 @@ export function ScheduleCard({
               {status.badge && (
                 <ScheduleBadge
                   mode={status.badge}
-                  isAwayModeActive={isAwayModeActive}
+                  isAwayModeActive={isAwayModeActive && isCollapsed}
                 />
               )}
               <span
