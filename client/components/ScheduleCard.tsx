@@ -10,6 +10,8 @@ interface Schedule {
   id: number;
   mode: string | null;
   temperature: number | null;
+  heatTemp?: number;
+  coolTemp?: number;
   days: string[];
   time: { hour: string; minute: string; period: string };
   enabled: boolean;
