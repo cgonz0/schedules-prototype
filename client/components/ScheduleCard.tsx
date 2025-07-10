@@ -229,7 +229,12 @@ export function ScheduleCard({
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3 h-6">
             <div className="flex items-center gap-2 h-6">
-              {status.badge && <ScheduleBadge mode={status.badge} />}
+              {status.badge && (
+                <ScheduleBadge
+                  mode={status.badge}
+                  isAwayModeActive={isAwayModeActive}
+                />
+              )}
               <span
                 className={`text-sm font-semibold uppercase tracking-wide leading-6 ${
                   isAwayModeActive ? "text-[#95A0AC]" : ""
