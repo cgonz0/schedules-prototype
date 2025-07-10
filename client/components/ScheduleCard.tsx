@@ -665,6 +665,54 @@ export function ScheduleCard({
           </div>
         </>
       )}
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-[10px]"
+            onClick={() => setShowDeleteDialog(false)}
+          />
+
+          {/* Dialog */}
+          <div className="relative bg-white rounded-xl p-6 w-full max-w-[327px] shadow-lg">
+            <div className="flex flex-col items-center gap-5">
+              {/* Title */}
+              <h3 className="text-xl font-normal text-[#2D3238] text-center leading-7">
+                Delete Schedule
+              </h3>
+
+              {/* Message */}
+              <p className="text-base font-normal text-[#2D3238] text-center leading-6">
+                Are you sure you want to delete this schedule?
+              </p>
+
+              {/* Buttons */}
+              <div className="flex flex-col gap-5 w-full">
+                {/* Delete Button */}
+                <button
+                  onClick={() => {
+                    onDelete();
+                    setShowDeleteDialog(false);
+                  }}
+                  className="w-full bg-[#1D2025] text-white font-semibold text-base px-6 py-4 rounded-lg shadow-sm hover:bg-[#1D2025]/90 transition-colors"
+                >
+                  Delete
+                </button>
+
+                {/* Cancel Button */}
+                <button
+                  onClick={() => setShowDeleteDialog(false)}
+                  className="w-full text-[#1D2025] font-semibold text-base px-6 py-4 rounded hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
