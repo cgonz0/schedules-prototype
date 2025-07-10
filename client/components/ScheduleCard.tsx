@@ -263,7 +263,11 @@ export function ScheduleCard({
               )}
             </div>
           </div>
-          <div className="flex items-center gap-1 text-sm text-foreground leading-5 h-5">
+          <div
+            className={`flex items-center gap-1 text-sm leading-5 h-5 ${
+              isAwayModeActive ? "text-[#95A0AC]" : "text-foreground"
+            }`}
+          >
             <span>
               {formatDays(
                 originalSchedule && schedule.saved
