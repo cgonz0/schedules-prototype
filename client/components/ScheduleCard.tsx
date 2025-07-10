@@ -48,6 +48,25 @@ export function ScheduleCard({
   const formatDays = (days: string[]) => {
     if (days.length === 0) return "No days selected";
     if (days.length === 7) return "Everyday";
+
+    const weekdays = ["mon", "tue", "wed", "thu", "fri"];
+    const weekends = ["sat", "sun"];
+
+    const hasAllWeekdays = weekdays.every((day) => days.includes(day));
+    const hasAllWeekends = weekends.every((day) => days.includes(day));
+
+    if (hasAllWeekdays && hasAllWeekends) {
+      return "Everyday";
+    }
+
+    if (hasAllWeekdays && days.length === 5) {
+      return "Weekdays";
+    }
+
+    if (hasAllWeekends && days.length === 2) {
+      return "Weekends";
+    }
+
     const dayNames = {
       sun: "Sun",
       mon: "Mon",
