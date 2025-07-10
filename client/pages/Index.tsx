@@ -76,7 +76,7 @@ export default function Index() {
             {/* Away Mode Bar */}
             <AwayModeBar isAwayMode={isAwayMode} onToggle={setIsAwayMode} />
 
-            <h2 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-4 font-rubik">
+            <h2 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2.5 font-rubik">
               SCHEDULES
             </h2>
 
