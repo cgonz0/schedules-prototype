@@ -35,6 +35,7 @@ export function ScheduleCard({
 }: ScheduleCardProps) {
   const [showSuccessBanner, setShowSuccessBanner] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [originalSchedule, setOriginalSchedule] = useState<Schedule | null>(
     null,
   );
