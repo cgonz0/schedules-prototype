@@ -287,10 +287,12 @@ export function ScheduleCard({
         </div>
 
         <div className="flex flex-col items-center gap-3">
-          <Switch
-            checked={schedule.enabled}
-            onCheckedChange={(enabled) => handleUpdate({ enabled })}
-          />
+          <div className={isAwayModeActive ? "opacity-60" : ""}>
+            <Switch
+              checked={schedule.enabled}
+              onCheckedChange={(enabled) => handleUpdate({ enabled })}
+            />
+          </div>
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="p-1 hover:bg-gray-100 rounded transition-colors"
