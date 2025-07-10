@@ -198,7 +198,7 @@ export function ScheduleCard({
     <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 relative">
       {/* Success Banner */}
       {showSuccessBanner && (
-        <div className="absolute -top-2 left-0 right-0 z-10 flex justify-center">
+        <div className="fixed bottom-4 left-0 right-0 z-50 flex justify-center">
           <div className="flex items-center gap-2 px-4 py-2 bg-[#E8FCE8] rounded-lg shadow-lg border border-green-200">
             <svg
               width="24"
