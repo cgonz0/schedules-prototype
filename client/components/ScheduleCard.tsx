@@ -222,7 +222,9 @@ export function ScheduleCard({
       )}
       {/* Summary Section */}
       <div className="flex items-start justify-between">
-        <div className="flex flex-col gap-2">
+        <div
+          className={`flex flex-col gap-2 ${isAwayModeActive && isCollapsed ? "opacity-70" : ""}`}
+        >
           <div className="flex items-center gap-3 h-6">
             <div className="flex items-center gap-2 h-6">
               {status.badge && (
