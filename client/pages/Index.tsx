@@ -6,6 +6,7 @@ import { AwayModeBar } from "../components/AwayModeBar";
 export default function Index() {
   const [isAwayMode, setIsAwayMode] = useState(false);
   const [schedules, setSchedules] = useState([]);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const updateSchedule = (id: number, updates: any) => {
     setSchedules((prev) =>
