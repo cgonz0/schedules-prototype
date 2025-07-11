@@ -207,12 +207,13 @@ export default function Index() {
                   <div className="flex items-center gap-4 p-4 pl-4 w-full">
                     <div className="flex-shrink-0">
                       <div className="relative w-6 h-6">
+                        {/* Calendar Icon */}
                         <svg
-                          width="20"
-                          height="20"
+                          width="24"
+                          height="24"
                           viewBox="0 0 20 20"
                           fill="none"
-                          className="absolute left-1 top-1 text-[#1D2025]"
+                          className="text-[#1D2025]"
                         >
                           <path
                             d="M5.99988 3H4.99988V0H5.99988V3Z"
@@ -231,19 +232,17 @@ export default function Index() {
                             fill="currentColor"
                           />
                         </svg>
+                        {/* Leaf Icon positioned inside calendar */}
                         <svg
-                          width="16"
-                          height="16"
+                          width="10"
+                          height="10"
                           viewBox="0 0 24 23"
                           fill="none"
-                          className="absolute left-0.5 top-0.5 text-[#1D2025] transform rotate-45"
+                          className="absolute left-2 top-3 text-[#1D2025] transform rotate-45"
                         >
                           <path
                             d="M8.00138 14.8407C5.76284 12.2596 7.19891 8.13414 10.6566 7.57645L16.51 6.63235C16.6105 6.61615 16.6973 6.70302 16.6811 6.80348L15.737 12.6569C15.1793 16.1146 11.0539 17.5506 8.47279 15.3121L7.75734 16.0276C7.62716 16.1578 7.41611 16.1578 7.28593 16.0276C7.15576 15.8974 7.15576 15.6863 7.28593 15.5562L8.00138 14.8407ZM8.94569 14.8392C11.1408 16.6941 14.6078 15.4712 15.0789 12.5507L15.9089 7.40459L10.7627 8.23462C7.84225 8.70566 6.6194 12.1727 8.47429 14.3678L9.07392 13.7682L9.07392 11.0778C9.07392 10.8937 9.22316 10.7445 9.40725 10.7445C9.59135 10.7445 9.74058 10.8937 9.74058 11.0778L9.74059 13.1015L12.9428 9.89932C13.073 9.76914 13.284 9.76914 13.4142 9.89932C13.5444 10.0295 13.5444 10.2405 13.4142 10.3707L10.212 13.5729H12.2357C12.4198 13.5729 12.569 13.7222 12.569 13.9063C12.569 14.0904 12.4198 14.2396 12.2357 14.2396H9.54532L8.94569 14.8392Z"
                             fill="currentColor"
-                            stroke="currentColor"
-                            strokeWidth="0.35"
-                            strokeLinecap="round"
                           />
                         </svg>
                       </div>
