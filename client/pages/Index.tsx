@@ -231,10 +231,10 @@ export default function Index() {
                           {/* Summary Section */}
                           <div className="flex items-start justify-between">
                             <div
-                              className={`flex flex-col gap-4 ${isAwayMode ? "opacity-70" : ""}`}
+                              className={`flex flex-col gap-2 ${isAwayMode ? "opacity-70" : ""}`}
                             >
-                              {/* Schedule Name on its own line with increased spacing */}
-                              <div className="flex items-center gap-2 h-6">
+                              {/* Schedule Name on its own line with increased spacing (16px) */}
+                              <div className="flex items-center gap-2 h-6 mb-2">
                                 {/* SMRT Schedule Icon */}
                                 <div className="w-6 h-6 flex items-center justify-center">
                                   <svg
@@ -272,6 +272,7 @@ export default function Index() {
                                   {schedule.smartScheduleName}
                                 </span>
                               </div>
+
                               {/* Mode and temperature info */}
                               <div className="flex items-center gap-3 h-6">
                                 <div className="flex items-center gap-2 h-6">
@@ -317,15 +318,26 @@ export default function Index() {
                               </div>
                             </div>
                             <div className="flex flex-col items-center gap-2">
-                              <div className="opacity-50 pointer-events-none">
+                              <div
+                                className={
+                                  isAwayMode
+                                    ? "opacity-60 pointer-events-none"
+                                    : ""
+                                }
+                              >
                                 <div className="flex items-center">
-                                  <div
+                                  <button
+                                    onClick={() =>
+                                      updateSchedule(schedule.id, {
+                                        enabled: !schedule.enabled,
+                                      })
+                                    }
                                     className={`relative inline-flex h-6 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 ${schedule.enabled ? "bg-[#1D2025]" : "bg-[#BCC5CF]"}`}
                                   >
                                     <span
                                       className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${schedule.enabled ? "translate-x-4" : "translate-x-0"}`}
                                     />
-                                  </div>
+                                  </button>
                                 </div>
                               </div>
                               <button
