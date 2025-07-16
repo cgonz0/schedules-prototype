@@ -452,7 +452,7 @@ export default function Index() {
                                     Fan Mode
                                   </label>
                                   <div className="flex gap-1">
-                                    <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-secondary text-gray-400 cursor-not-allowed">
+                                    <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-[#1D2025] text-white cursor-not-allowed">
                                       Auto
                                     </button>
                                     <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-secondary text-gray-400 cursor-not-allowed">
