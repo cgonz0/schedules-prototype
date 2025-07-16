@@ -460,10 +460,10 @@ export default function Index() {
                                   </label>
                                   <div className="opacity-50 pointer-events-none">
                                     <div className="flex gap-1">
-                                      <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-[#1D2025] text-white cursor-not-allowed">
+                                      <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-foreground text-primary-foreground cursor-not-allowed">
                                         Auto
                                       </button>
-                                      <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-secondary text-gray-400 cursor-not-allowed">
+                                      <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-secondary text-foreground cursor-not-allowed">
                                         On
                                       </button>
                                     </div>
