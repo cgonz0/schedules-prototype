@@ -606,8 +606,12 @@ export function ScheduleCard({
                   className={`flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold transition-colors ${
                     schedule.fanMode === "auto"
                       ? "bg-foreground text-primary-foreground"
-                      : "bg-secondary text-foreground"
+                      : "text-foreground"
                   }`}
+                  style={{
+                    backgroundColor:
+                      schedule.fanMode === "auto" ? undefined : "#EDEFF2",
+                  }}
                   onClick={() => handleUpdate({ fanMode: "auto" })}
                 >
                   <FanAutoIcon />
@@ -617,8 +621,12 @@ export function ScheduleCard({
                   className={`flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold transition-colors ${
                     schedule.fanMode === "on"
                       ? "bg-foreground text-primary-foreground"
-                      : "bg-secondary text-foreground"
+                      : "text-foreground"
                   }`}
+                  style={{
+                    backgroundColor:
+                      schedule.fanMode === "on" ? undefined : "#EDEFF2",
+                  }}
                   onClick={() => handleUpdate({ fanMode: "on" })}
                 >
                   <FanOnIcon />
