@@ -763,13 +763,16 @@ export default function Index() {
                                   {formatScheduleTitle(preset)}
                                 </span>
                                 {preset.mode !== "off" && (
-                                  <ScheduleBadge mode={preset.mode} />
+                                  <ScheduleBadge
+                                    mode={preset.mode}
+                                    whiteBackground={true}
+                                  />
                                 )}
                                 {preset.mode === "off" && (
                                   <div className="w-6 h-6 flex items-center justify-center">
                                     <div
                                       className="w-6 h-6 rounded-full flex items-center justify-center"
-                                      style={{ backgroundColor: "#CCD1D8" }}
+                                      style={{ backgroundColor: "white" }}
                                     >
                                       <svg
                                         width="16"
