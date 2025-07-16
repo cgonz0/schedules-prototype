@@ -253,7 +253,7 @@ export function ScheduleCard({
         <div
           className={`flex flex-col gap-2 ${isAwayModeActive ? "opacity-70" : ""}`}
         >
-          <div className="flex items-center gap-3 h-6">
+          <div className="flex items-center gap-2 h-6">
             <div className="flex items-center gap-2 h-6">
               {status.badge && (
                 <ScheduleBadge
