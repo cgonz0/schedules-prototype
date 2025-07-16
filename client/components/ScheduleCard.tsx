@@ -458,7 +458,10 @@ export function ScheduleCard({
                       </div>
 
                       {/* Cool Control */}
-                      <div className="flex-1 h-10 px-3 flex items-center justify-between bg-secondary rounded-lg">
+                      <div
+                        className="flex-1 h-10 px-3 flex items-center justify-between rounded-lg"
+                        style={{ backgroundColor: "#EDEFF2" }}
+                      >
                         <button
                           onClick={() => {
                             const currentCool = schedule.coolTemp || 75;
