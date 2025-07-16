@@ -150,7 +150,7 @@ export default function Index() {
 
   const formatScheduleTitle = (preset: PresetSchedule) => {
     if (preset.mode === "auto") {
-      return `AUTO ${preset.heatTemp}-${preset.coolTemp}°`;
+      return `${preset.heatTemp}-${preset.coolTemp}°`;
     }
     if (preset.mode === "cool") {
       return `${preset.temperature}°`;
