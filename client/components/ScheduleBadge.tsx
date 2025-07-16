@@ -7,6 +7,7 @@ interface ScheduleBadgeProps {
 export function ScheduleBadge({
   mode,
   isAwayModeActive = false,
+  whiteBackground = false,
 }: ScheduleBadgeProps) {
   if (mode === "cool") {
     return (
