@@ -1,6 +1,7 @@
 interface ScheduleBadgeProps {
   mode: string;
   isAwayModeActive?: boolean;
+  whiteBackground?: boolean;
 }
 
 export function ScheduleBadge({
