@@ -416,7 +416,10 @@ export default function Index() {
                                 {schedule.mode && schedule.mode !== "off" && (
                                   <div className="space-y-2.5">
                                     <div className="flex gap-3">
-                                      <div className="flex-1 h-10 px-3 flex items-center justify-center bg-secondary rounded-lg">
+                                      <div
+                                        className="flex-1 h-10 px-3 flex items-center justify-center rounded-lg"
+                                        style={{ backgroundColor: "#EDEFF2" }}
+                                      >
                                         <span className="text-base font-semibold text-[#9B9FA6]">
                                           {schedule.mode === "auto"
                                             ? `${schedule.heatTemp || 68}° - ${schedule.coolTemp || 75}°`
