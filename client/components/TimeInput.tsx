@@ -48,7 +48,8 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
               <select
                 value={time.hour}
                 onChange={(e) => handleHourChange(e.target.value)}
-                className="w-8 h-5 bg-secondary rounded-xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer flex-shrink-0"
+                className="w-8 h-5 rounded-xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer flex-shrink-0"
+                style={{ backgroundColor: "#EDEFF2" }}
               >
                 <option value="">--</option>
                 {hours.map((hour) => (
@@ -64,7 +65,8 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
               <select
                 value={time.minute}
                 onChange={(e) => handleMinuteChange(e.target.value)}
-                className="w-8 h-5 bg-secondary rounded-xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer flex-shrink-0"
+                className="w-8 h-5 rounded-xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer flex-shrink-0"
+                style={{ backgroundColor: "#EDEFF2" }}
               >
                 <option value="">--</option>
                 {minutes.map((minute) => (
@@ -77,7 +79,8 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
               {/* Period Toggle */}
               <button
                 onClick={handlePeriodToggle}
-                className="w-8 h-5 bg-secondary rounded-xl text-xs text-secondary-foreground hover:bg-gray-300 transition-colors flex-shrink-0"
+                className="w-8 h-5 rounded-xl text-xs text-secondary-foreground hover:bg-gray-300 transition-colors flex-shrink-0"
+                style={{ backgroundColor: "#EDEFF2" }}
               >
                 {time.hour ? time.period : "--"}
               </button>
