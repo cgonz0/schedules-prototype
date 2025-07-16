@@ -415,16 +415,18 @@ export default function Index() {
                                 {/* Temperature Controls - Disabled */}
                                 {schedule.mode && schedule.mode !== "off" && (
                                   <div className="space-y-2.5">
-                                    <div className="flex gap-3">
-                                      <div
-                                        className="flex-1 h-10 px-3 flex items-center justify-center rounded-lg"
-                                        style={{ backgroundColor: "#EDEFF2" }}
-                                      >
-                                        <span className="text-base font-semibold text-[#9B9FA6]">
-                                          {schedule.mode === "auto"
-                                            ? `${schedule.heatTemp || 68}° - ${schedule.coolTemp || 75}°`
-                                            : `${schedule.temperature || 73}°`}
-                                        </span>
+                                    <div className="opacity-50 pointer-events-none">
+                                      <div className="flex gap-3">
+                                        <div
+                                          className="flex-1 h-10 px-3 flex items-center justify-center rounded-lg"
+                                          style={{ backgroundColor: "#EDEFF2" }}
+                                        >
+                                          <span className="text-base font-semibold text-[#9B9FA6]">
+                                            {schedule.mode === "auto"
+                                              ? `${schedule.heatTemp || 68}° - ${schedule.coolTemp || 75}°`
+                                              : `${schedule.temperature || 73}°`}
+                                          </span>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
