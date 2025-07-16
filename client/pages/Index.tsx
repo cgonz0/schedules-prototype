@@ -391,7 +391,7 @@ export default function Index() {
                           {/* Expanded Controls Section - Disabled State */}
                           {!isCollapsed && (
                             <>
-                              <div className="mt-4 space-y-4 opacity-50 pointer-events-none">
+                              <div className="mt-4 space-y-4">
                                 {/* Mode Selection - Disabled */}
                                 <div className="space-y-2.5">
                                   <label className="text-sm font-semibold text-gray-400">
