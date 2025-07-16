@@ -42,8 +42,11 @@ export function ModeSelector({
             className={`flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold transition-colors ${
               isSelected
                 ? "bg-foreground text-primary-foreground"
-                : "bg-secondary text-foreground hover:bg-gray-200"
+                : "text-foreground hover:bg-gray-200"
             }`}
+            style={{
+              backgroundColor: isSelected ? undefined : "#EDEFF2",
+            }}
             onClick={() => onModeSelect(mode.id)}
           >
             <Icon />
