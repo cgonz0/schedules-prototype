@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { X, Home, ChevronDown, ChevronUp } from "lucide-react";
+import { X, Home, ChevronDown, ChevronUp, Trash2 } from "lucide-react";
 import { ScheduleCard } from "../components/ScheduleCard";
 import { AwayModeBar } from "../components/AwayModeBar";
 import { ScheduleBadge } from "../components/ScheduleBadge";
+import { ModeSelector } from "../components/ModeSelector";
+import { WeekdayPicker } from "../components/WeekdayPicker";
+import { TimeInput } from "../components/TimeInput";
 
 interface PresetSchedule {
   id: string;
