@@ -307,6 +307,13 @@ export default function Index() {
                                           : "OFF"}
                                   </span>
                                 </div>
+                                {!schedule.enabled && (
+                                  <div className="px-5 py-0.5 bg-[#D9EBFC] rounded-full h-5 flex items-center">
+                                    <span className="text-xs font-semibold text-[#034F8C] leading-none">
+                                      Paused
+                                    </span>
+                                  </div>
+                                )}
                               </div>
                               {/* Days and time info */}
                               <div
