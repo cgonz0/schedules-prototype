@@ -397,9 +397,10 @@ export default function Index() {
                                   <label className="text-sm font-semibold text-gray-400">
                                     Mode
                                   </label>
-                                  <div className="flex gap-1">
-                                    <button
-                                      className={`flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold cursor-not-allowed ${schedule.mode === "cool" ? "bg-[#E2EEFC] text-[#1772D6]" : "bg-secondary text-gray-400"}`}
+                                                                    <ModeSelector
+                                    selectedMode={schedule.mode}
+                                    onModeSelect={() => {}}
+                                  />
                                     >
                                       <svg
                                         width="16"
