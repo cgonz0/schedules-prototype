@@ -738,7 +738,7 @@ export default function Index() {
                               createPresetSchedule(preset);
                               setShowCreateModal(false);
                             }}
-                            className="w-full p-2 rounded-xl border border-transparent hover:border-gray-200 transition-colors"
+                            className="w-full py-2 px-4 rounded-xl border border-transparent hover:border-gray-200 transition-colors"
                             style={{ backgroundColor: preset.backgroundColor }}
                           >
                             <div className="flex items-center justify-between">
