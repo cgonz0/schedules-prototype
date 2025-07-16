@@ -540,8 +540,11 @@ export function ScheduleCard({
                       <span
                         className="text-base font-semibold"
                         style={{
-                          color:
-                            schedule.mode === "cool" ? "#1772D6" : "#A23110",
+                          color: schedule.enabled
+                            ? schedule.mode === "cool"
+                              ? "#1772D6"
+                              : "#A23110"
+                            : "#9B9FA6",
                         }}
                       >
                         {schedule.temperature ||
