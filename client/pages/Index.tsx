@@ -301,9 +301,9 @@ export default function Index() {
                                     {schedule.mode === "auto"
                                       ? `AUTO ${schedule.heatTemp}-${schedule.coolTemp}°`
                                       : schedule.mode === "cool"
-                                        ? `${schedule.temperature}°`
+                                        ? `Cool to ${schedule.temperature}°`
                                         : schedule.mode === "heat"
-                                          ? `${schedule.temperature}°`
+                                          ? `Heat to ${schedule.temperature}°`
                                           : "OFF"}
                                   </span>
                                 </div>
