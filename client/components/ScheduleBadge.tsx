@@ -68,7 +68,10 @@ export function ScheduleBadge({
       >
         <div
           className="w-6 h-6 rounded-full flex items-center justify-center"
-          style={{ backgroundColor: "#F9D9D2", opacity: 0.7 }}
+          style={{
+            backgroundColor: whiteBackground ? "white" : "#F9D9D2",
+            opacity: 0.7,
+          }}
         >
           <svg
             width="16"
