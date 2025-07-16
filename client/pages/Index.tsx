@@ -458,13 +458,15 @@ export default function Index() {
                                   <label className="text-sm font-semibold text-gray-400">
                                     Fan Mode
                                   </label>
-                                  <div className="flex gap-1">
-                                    <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-[#1D2025] text-white cursor-not-allowed">
-                                      Auto
-                                    </button>
-                                    <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-secondary text-gray-400 cursor-not-allowed">
-                                      On
-                                    </button>
+                                  <div className="opacity-50 pointer-events-none">
+                                    <div className="flex gap-1">
+                                      <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-[#1D2025] text-white cursor-not-allowed">
+                                        Auto
+                                      </button>
+                                      <button className="flex-1 h-10 px-2.5 flex items-center justify-center gap-1 rounded-lg text-xs font-semibold bg-secondary text-gray-400 cursor-not-allowed">
+                                        On
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
 
