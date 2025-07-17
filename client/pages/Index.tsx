@@ -204,18 +204,24 @@ export default function Index() {
 
             {schedules.filter((s) => !s.isSmartSchedule).length > 0 && (
               <div className="space-y-4 mb-6">
-                {schedules
-                  .filter((s) => !s.isSmartSchedule)
-                  .sort((a, b) => {
-                    // Keep unsaved schedules at the top
-                    if (!a.saved && b.saved) return -1;
-                    if (a.saved && !b.saved) return 1;
-                    if (!a.saved && !b.saved) return 0; // Keep original order for brand new schedules
+                {(() => {
+                  const customSchedules = schedules.filter(
+                    (s) => !s.isSmartSchedule,
+                  );
 
-                    // Don't sort draft schedules - they should maintain their position
-                    if (a.isDraft || b.isDraft) return 0;
+                  // Separate schedules into groups to maintain stable positioning
+                  const unsavedSchedules = customSchedules.filter(
+                    (s) => !s.saved,
+                  );
+                  const draftSchedules = customSchedules.filter(
+                    (s) => s.saved && s.isDraft,
+                  );
+                  const savedSchedules = customSchedules.filter(
+                    (s) => s.saved && !s.isDraft,
+                  );
 
-                    // Only sort schedules that are saved AND not drafts
+                  // Sort only the saved, non-draft schedules
+                  const sortedSavedSchedules = savedSchedules.sort((a, b) => {
                     // Day order: Sunday (0) through Saturday (6)
                     const dayOrder = [
                       "sun",
@@ -261,18 +267,23 @@ export default function Index() {
                         : 0);
 
                     return aTimeMinutes - bTimeMinutes;
-                  })
-                  .map((schedule) => (
-                    <ScheduleCard
-                      key={schedule.id}
-                      schedule={schedule}
-                      isAwayModeActive={isAwayMode}
-                      onUpdate={(updates) =>
-                        updateSchedule(schedule.id, updates)
-                      }
-                      onDelete={() => deleteSchedule(schedule.id)}
-                    />
-                  ))}
+                  });
+
+                  // Combine groups in the correct order: unsaved, drafts, then sorted saved
+                  return [
+                    ...unsavedSchedules,
+                    ...draftSchedules,
+                    ...sortedSavedSchedules,
+                  ];
+                })().map((schedule) => (
+                  <ScheduleCard
+                    key={schedule.id}
+                    schedule={schedule}
+                    isAwayModeActive={isAwayMode}
+                    onUpdate={(updates) => updateSchedule(schedule.id, updates)}
+                    onDelete={() => deleteSchedule(schedule.id)}
+                  />
+                ))}
               </div>
             )}
 
