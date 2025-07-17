@@ -231,8 +231,11 @@ export function ScheduleCard({
       {showSuccessBanner && (
         <div className="fixed bottom-14 left-0 right-0 z-50 flex justify-center px-4">
           <div
-            className="flex items-center gap-2 px-4 bg-[#E8FCE8] rounded-lg h-16 shadow-sm w-full max-w-sm"
-            style={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)" }}
+            className="flex items-center gap-2 px-4 bg-[#E8FCE8] rounded-lg h-16 shadow-sm"
+            style={{
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+              width: "352px",
+            }}
           >
             <svg
               width="24"
