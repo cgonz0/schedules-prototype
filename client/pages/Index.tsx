@@ -780,7 +780,7 @@ export default function Index() {
                                 <div className="flex items-center gap-3">
                                   {isAlreadyUsed && (
                                     <span className="text-xs font-semibold text-[#676F79] uppercase tracking-wide">
-                                      Already Used
+                                      Active
                                     </span>
                                   )}
                                   {!isAlreadyUsed && (
