@@ -778,12 +778,19 @@ export default function Index() {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                  <span
-                                    className="text-sm font-semibold"
-                                    style={{ color: preset.textColor }}
-                                  >
-                                    {formatScheduleTitle(preset)}
-                                  </span>
+                                  {isAlreadyUsed && (
+                                    <span className="text-xs font-semibold text-[#676F79] uppercase tracking-wide">
+                                      Already Used
+                                    </span>
+                                  )}
+                                  {!isAlreadyUsed && (
+                                    <span
+                                      className="text-sm font-semibold"
+                                      style={{ color: preset.textColor }}
+                                    >
+                                      {formatScheduleTitle(preset)}
+                                    </span>
+                                  )}
                                   {preset.mode !== "off" && (
                                     <ScheduleBadge
                                       mode={preset.mode}
