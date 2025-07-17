@@ -763,7 +763,7 @@ export default function Index() {
                             >
                               <div className="flex items-center justify-between">
                                 <div className="flex flex-col items-start gap-1">
-                                  <h5 className="text-sm font-semibold text-[#1D2025] leading-5">
+                                  <h5 className="text-sm font-semibold text-[#1D2025] leading-5 text-left">
                                     {preset.name}
                                   </h5>
                                   <div className="flex items-center gap-1 text-xs text-[#676F79]">
