@@ -98,6 +98,13 @@ export default function Index() {
     setSchedules((prev) => [newSchedule, ...prev]);
   };
 
+  const isPresetAlreadyUsed = (presetName: string) => {
+    return schedules.some(
+      (schedule) =>
+        schedule.isSmartSchedule && schedule.smartScheduleName === presetName,
+    );
+  };
+
   const createPresetSchedule = (preset: PresetSchedule) => {
     const newId = Math.max(...schedules.map((s) => s.id), 0) + 1;
     const newSchedule = {
