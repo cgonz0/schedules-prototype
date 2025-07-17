@@ -345,7 +345,9 @@ export default function Index() {
                                     />
                                   </svg>
                                 </div>
-                                <span className="text-sm font-semibold text-foreground">
+                                <span
+                                  className={`text-sm font-semibold ${isAwayMode ? "text-[#95A0AC]" : "text-foreground"}`}
+                                >
                                   {schedule.smartScheduleName}
                                 </span>
                                 {!schedule.enabled && (
