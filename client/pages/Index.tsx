@@ -369,16 +369,19 @@ export default function Index() {
                                     />
                                   )}
                                   <span
-                                    className="text-sm font-semibold uppercase tracking-wide leading-6"
+                                    className={`text-sm font-semibold uppercase tracking-wide leading-6 ${
+                                      isAwayMode ? "text-[#95A0AC]" : ""
+                                    }`}
                                     style={{
                                       color:
-                                        schedule.mode === "auto"
+                                        !isAwayMode &&
+                                        (schedule.mode === "auto"
                                           ? "#9D4BB5"
                                           : schedule.mode === "cool"
                                             ? "#1772D6"
                                             : schedule.mode === "heat"
                                               ? "#A23110"
-                                              : "#1D2025",
+                                              : "#1D2025"),
                                     }}
                                   >
                                     {schedule.mode === "auto"
