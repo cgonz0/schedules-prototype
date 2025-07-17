@@ -98,9 +98,10 @@ export default function Index() {
     setSchedules((prev) => [newSchedule, ...prev]);
   };
 
-    const isPresetAlreadyUsed = (presetName: string) => {
+  const isPresetAlreadyUsed = (presetName: string) => {
     return schedules.some(
-      (schedule) => schedule.isSmartSchedule && schedule.smartScheduleName === presetName
+      (schedule) =>
+        schedule.isSmartSchedule && schedule.smartScheduleName === presetName,
     );
   };
 
@@ -736,9 +737,11 @@ export default function Index() {
                           COMMUNITY RECOMMENDATIONS
                         </h4>
                       </div>
-                                            <div className="space-y-2">
+                      <div className="space-y-2">
                         {PRESET_SCHEDULES.map((preset) => {
-                          const isAlreadyUsed = isPresetAlreadyUsed(preset.name);
+                          const isAlreadyUsed = isPresetAlreadyUsed(
+                            preset.name,
+                          );
                           return (
                             <button
                               key={preset.id}
@@ -754,70 +757,75 @@ export default function Index() {
                                   ? "opacity-50 cursor-not-allowed"
                                   : "hover:border-gray-200"
                               }`}
-                              style={{ backgroundColor: preset.backgroundColor }}
+                              style={{
+                                backgroundColor: preset.backgroundColor,
+                              }}
                             >
-                            <div className="flex items-center justify-between">
-                              <div className="flex flex-col items-start gap-1">
-                                <h5 className="text-sm font-semibold text-[#1D2025] leading-5">
-                                  {preset.name}
-                                </h5>
-                                <div className="flex items-center gap-1 text-xs text-[#676F79]">
-                                  <span>{formatDaysDisplay(preset.days)}</span>
-                                  <span className="font-semibold">•</span>
-                                  <span>
-                                    {preset.time.hour}:{preset.time.minute}{" "}
-                                    {preset.time.period}
+                              <div className="flex items-center justify-between">
+                                <div className="flex flex-col items-start gap-1">
+                                  <h5 className="text-sm font-semibold text-[#1D2025] leading-5">
+                                    {preset.name}
+                                  </h5>
+                                  <div className="flex items-center gap-1 text-xs text-[#676F79]">
+                                    <span>
+                                      {formatDaysDisplay(preset.days)}
+                                    </span>
+                                    <span className="font-semibold">•</span>
+                                    <span>
+                                      {preset.time.hour}:{preset.time.minute}{" "}
+                                      {preset.time.period}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <span
+                                    className="text-sm font-semibold"
+                                    style={{ color: preset.textColor }}
+                                  >
+                                    {formatScheduleTitle(preset)}
                                   </span>
+                                  {preset.mode !== "off" && (
+                                    <ScheduleBadge
+                                      mode={preset.mode}
+                                      whiteBackground={true}
+                                    />
+                                  )}
+                                  {preset.mode === "off" && (
+                                    <div className="w-6 h-6 flex items-center justify-center">
+                                      <div
+                                        className="w-6 h-6 rounded-full flex items-center justify-center"
+                                        style={{ backgroundColor: "white" }}
+                                      >
+                                        <svg
+                                          width="16"
+                                          height="16"
+                                          viewBox="0 0 16 16"
+                                          fill="none"
+                                          className="w-4 h-4"
+                                        >
+                                          <path
+                                            opacity="0.4"
+                                            d="M9.35012 6.18804L7.5 8L7.22654 6.78932H6L7 1.5H10L9.35012 6.18804Z"
+                                            fill="#676F79"
+                                          />
+                                          <path
+                                            opacity="0.4"
+                                            d="M10.5 7L7.38623 13L7.38622 8.62351L9.47461 7L9.46806 7.01972L10.5 7Z"
+                                            fill="#676F79"
+                                          />
+                                          <path
+                                            d="M13.8833 2.40663C14.0411 2.24884 14.0378 1.9937 13.88 1.83592C13.7222 1.67814 13.467 1.68149 13.3093 1.83928L10.0059 5.16953L10.4725 1H6.60512L5.71549 7.39529H6.78976L6.85691 8.35206L2.11667 13.1259C1.95889 13.2836 1.96225 13.5388 2.12003 13.6966C2.19724 13.7738 2.30131 13.8141 2.40538 13.8141C2.50945 13.8141 2.61352 13.7738 2.69074 13.6966L6.93076 9.41962L7.29669 14.6903L10.9861 6.58622H9.84809L9.86152 6.4553L13.8833 2.40663Z"
+                                            fill="#40464E"
+                                          />
+                                        </svg>
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
-                              <div className="flex items-center gap-3">
-                                <span
-                                  className="text-sm font-semibold"
-                                  style={{ color: preset.textColor }}
-                                >
-                                  {formatScheduleTitle(preset)}
-                                </span>
-                                {preset.mode !== "off" && (
-                                  <ScheduleBadge
-                                    mode={preset.mode}
-                                    whiteBackground={true}
-                                  />
-                                )}
-                                {preset.mode === "off" && (
-                                  <div className="w-6 h-6 flex items-center justify-center">
-                                    <div
-                                      className="w-6 h-6 rounded-full flex items-center justify-center"
-                                      style={{ backgroundColor: "white" }}
-                                    >
-                                      <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 16 16"
-                                        fill="none"
-                                        className="w-4 h-4"
-                                      >
-                                        <path
-                                          opacity="0.4"
-                                          d="M9.35012 6.18804L7.5 8L7.22654 6.78932H6L7 1.5H10L9.35012 6.18804Z"
-                                          fill="#676F79"
-                                        />
-                                        <path
-                                          opacity="0.4"
-                                          d="M10.5 7L7.38623 13L7.38622 8.62351L9.47461 7L9.46806 7.01972L10.5 7Z"
-                                          fill="#676F79"
-                                        />
-                                        <path
-                                          d="M13.8833 2.40663C14.0411 2.24884 14.0378 1.9937 13.88 1.83592C13.7222 1.67814 13.467 1.68149 13.3093 1.83928L10.0059 5.16953L10.4725 1H6.60512L5.71549 7.39529H6.78976L6.85691 8.35206L2.11667 13.1259C1.95889 13.2836 1.96225 13.5388 2.12003 13.6966C2.19724 13.7738 2.30131 13.8141 2.40538 13.8141C2.50945 13.8141 2.61352 13.7738 2.69074 13.6966L6.93076 9.41962L7.29669 14.6903L10.9861 6.58622H9.84809L9.86152 6.4553L13.8833 2.40663Z"
-                                          fill="#40464E"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </button>
-                        ))}
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
