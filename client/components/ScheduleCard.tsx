@@ -4,7 +4,6 @@ import { ScheduleBadge } from "./ScheduleBadge";
 import { ModeSelector } from "./ModeSelector";
 import { WeekdayPicker } from "./WeekdayPicker";
 import { TimeInput } from "./TimeInput";
-import { Switch } from "./Switch";
 
 interface Schedule {
   id: number;
