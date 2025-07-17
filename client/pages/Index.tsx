@@ -691,7 +691,7 @@ export default function Index() {
                     onClick={() =>
                       setIsSmartScheduleExpanded(!isSmartScheduleExpanded)
                     }
-                    className="flex items-center gap-4 p-4 pl-4 w-full hover:bg-gray-50 transition-colors"
+                    className="flex items-center gap-4 p-4 pl-4 w-full hover:bg-gray-50 rounded-xl transition-colors"
                   >
                     <div className="flex-shrink-0">
                       <svg
