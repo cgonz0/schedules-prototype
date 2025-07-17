@@ -321,10 +321,16 @@ export function ScheduleCard({
           <div
             className={isAwayModeActive ? "opacity-60 pointer-events-none" : ""}
           >
-            <Switch
-              checked={schedule.enabled}
-              onCheckedChange={(enabled) => handleUpdate({ enabled })}
-            />
+            <div className="flex items-center">
+              <button
+                onClick={() => handleUpdate({ enabled: !schedule.enabled })}
+                className={`relative inline-flex h-6 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 ${schedule.enabled ? "bg-[#1D2025]" : "bg-[#BCC5CF]"}`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${schedule.enabled ? "translate-x-4" : "translate-x-0"}`}
+                />
+              </button>
+            </div>
           </div>
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
