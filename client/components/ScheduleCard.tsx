@@ -229,9 +229,9 @@ export function ScheduleCard({
     <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 relative">
       {/* Success Banner */}
       {showSuccessBanner && (
-        <div className="fixed bottom-14 left-0 right-0 z-50 flex justify-center">
+        <div className="fixed bottom-14 left-0 right-0 z-50 flex justify-center px-4">
           <div
-            className="flex items-center gap-2 px-4 bg-[#E8FCE8] rounded-lg h-16 shadow-sm"
+            className="flex items-center gap-2 px-4 bg-[#E8FCE8] rounded-lg h-16 shadow-sm w-full max-w-sm"
             style={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)" }}
           >
             <svg
