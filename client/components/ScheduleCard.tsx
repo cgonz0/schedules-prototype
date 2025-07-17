@@ -160,7 +160,9 @@ export function ScheduleCard({
       schedule.mode !== null &&
       schedule.days.length > 0 &&
       schedule.time.hour &&
-      schedule.time.minute
+      schedule.time.minute &&
+      schedule.fanMode &&
+      schedule.fanMode !== null
     );
   };
 
