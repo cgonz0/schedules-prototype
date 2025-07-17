@@ -98,10 +98,9 @@ export default function Index() {
     setSchedules((prev) => [newSchedule, ...prev]);
   };
 
-  const isPresetAlreadyUsed = (presetName: string) => {
+    const isPresetAlreadyUsed = (presetName: string) => {
     return schedules.some(
-      (schedule) =>
-        schedule.isSmartSchedule && schedule.smartScheduleName === presetName,
+      (schedule) => schedule.isSmartSchedule && schedule.smartScheduleName === presetName
     );
   };
 
@@ -737,17 +736,26 @@ export default function Index() {
                           COMMUNITY RECOMMENDATIONS
                         </h4>
                       </div>
-                      <div className="space-y-2">
-                        {PRESET_SCHEDULES.map((preset) => (
-                          <button
-                            key={preset.id}
-                            onClick={() => {
-                              createPresetSchedule(preset);
-                              setShowCreateModal(false);
-                            }}
-                            className="w-full py-2 px-4 rounded-xl border border-transparent hover:border-gray-200 transition-colors"
-                            style={{ backgroundColor: preset.backgroundColor }}
-                          >
+                                            <div className="space-y-2">
+                        {PRESET_SCHEDULES.map((preset) => {
+                          const isAlreadyUsed = isPresetAlreadyUsed(preset.name);
+                          return (
+                            <button
+                              key={preset.id}
+                              onClick={() => {
+                                if (!isAlreadyUsed) {
+                                  createPresetSchedule(preset);
+                                  setShowCreateModal(false);
+                                }
+                              }}
+                              disabled={isAlreadyUsed}
+                              className={`w-full py-2 px-4 rounded-xl border border-transparent transition-colors ${
+                                isAlreadyUsed
+                                  ? "opacity-50 cursor-not-allowed"
+                                  : "hover:border-gray-200"
+                              }`}
+                              style={{ backgroundColor: preset.backgroundColor }}
+                            >
                             <div className="flex items-center justify-between">
                               <div className="flex flex-col items-start gap-1">
                                 <h5 className="text-sm font-semibold text-[#1D2025] leading-5">
