@@ -207,15 +207,15 @@ export default function Index() {
                 {schedules
                   .filter((s) => !s.isSmartSchedule)
                   .sort((a, b) => {
-                    // Only keep brand new unsaved schedules at the top
-                    // Draft schedules should stay in their sorted position
+                    // Keep unsaved schedules at the top
                     if (!a.saved && b.saved) return -1;
                     if (a.saved && !b.saved) return 1;
                     if (!a.saved && !b.saved) return 0; // Keep original order for brand new schedules
 
-                    // Both schedules are saved (including drafts) - sort them normally
+                    // Don't sort draft schedules - they should maintain their position
+                    if (a.isDraft || b.isDraft) return 0;
 
-                    // Only sort saved schedules by day and time
+                    // Only sort schedules that are saved AND not drafts
                     // Day order: Sunday (0) through Saturday (6)
                     const dayOrder = [
                       "sun",
