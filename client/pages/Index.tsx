@@ -623,7 +623,7 @@ export default function Index() {
                       createNewSchedule();
                       setShowCreateModal(false);
                     }}
-                    className="flex items-center gap-4 p-4 pl-4 hover:bg-gray-50 transition-colors w-full text-left"
+                    className="flex items-center gap-4 p-4 pl-4 hover:bg-gray-50 rounded-xl transition-colors w-full text-left"
                   >
                     <div className="flex-shrink-0">
                       <svg
