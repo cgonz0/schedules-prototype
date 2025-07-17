@@ -206,6 +206,53 @@ export default function Index() {
               <div className="space-y-4 mb-6">
                 {schedules
                   .filter((s) => !s.isSmartSchedule)
+                  .sort((a, b) => {
+                    // Day order: Sunday (0) through Saturday (6)
+                    const dayOrder = [
+                      "sun",
+                      "mon",
+                      "tue",
+                      "wed",
+                      "thu",
+                      "fri",
+                      "sat",
+                    ];
+
+                    // Get the first day for each schedule
+                    const aFirstDayIndex = Math.min(
+                      ...a.days.map((day) => dayOrder.indexOf(day)),
+                    );
+                    const bFirstDayIndex = Math.min(
+                      ...b.days.map((day) => dayOrder.indexOf(day)),
+                    );
+
+                    // First sort by first day
+                    if (aFirstDayIndex !== bFirstDayIndex) {
+                      return aFirstDayIndex - bFirstDayIndex;
+                    }
+
+                    // If same first day, sort by time
+                    const aTimeMinutes =
+                      parseInt(a.time.hour) * 60 +
+                      parseInt(a.time.minute) +
+                      (a.time.period === "PM" && a.time.hour !== "12"
+                        ? 12 * 60
+                        : 0) +
+                      (a.time.period === "AM" && a.time.hour === "12"
+                        ? -12 * 60
+                        : 0);
+                    const bTimeMinutes =
+                      parseInt(b.time.hour) * 60 +
+                      parseInt(b.time.minute) +
+                      (b.time.period === "PM" && b.time.hour !== "12"
+                        ? 12 * 60
+                        : 0) +
+                      (b.time.period === "AM" && b.time.hour === "12"
+                        ? -12 * 60
+                        : 0);
+
+                    return aTimeMinutes - bTimeMinutes;
+                  })
                   .map((schedule) => (
                     <ScheduleCard
                       key={schedule.id}
