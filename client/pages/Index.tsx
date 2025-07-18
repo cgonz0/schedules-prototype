@@ -209,89 +209,71 @@ export default function Index() {
                     (s) => !s.isSmartSchedule,
                   );
 
-                  // First, get current order for all saved schedules to preserve draft positions
-                  const savedSchedules = customSchedules.filter((s) => s.saved);
-
-                  // Separate draft and non-draft schedules
-                  const draftSchedules = savedSchedules.filter(
+                  // Check if any schedule is currently in draft mode
+                  const hasDraftSchedules = customSchedules.some(
                     (s) => s.isDraft,
                   );
-                  const nonDraftSchedules = savedSchedules.filter(
-                    (s) => !s.isDraft,
-                  );
 
-                  // Sort only the non-draft schedules
-                  const sortedNonDraftSchedules = nonDraftSchedules.sort(
-                    (a, b) => {
-                      // Day order: Sunday (0) through Saturday (6)
-                      const dayOrder = [
-                        "sun",
-                        "mon",
-                        "tue",
-                        "wed",
-                        "thu",
-                        "fri",
-                        "sat",
-                      ];
-
-                      // Get the first day for each schedule
-                      const aFirstDayIndex = Math.min(
-                        ...a.days.map((day) => dayOrder.indexOf(day)),
-                      );
-                      const bFirstDayIndex = Math.min(
-                        ...b.days.map((day) => dayOrder.indexOf(day)),
-                      );
-
-                      // First sort by first day
-                      if (aFirstDayIndex !== bFirstDayIndex) {
-                        return aFirstDayIndex - bFirstDayIndex;
-                      }
-
-                      // If same first day, sort by time
-                      const aTimeMinutes =
-                        parseInt(a.time.hour) * 60 +
-                        parseInt(a.time.minute) +
-                        (a.time.period === "PM" && a.time.hour !== "12"
-                          ? 12 * 60
-                          : 0) +
-                        (a.time.period === "AM" && a.time.hour === "12"
-                          ? -12 * 60
-                          : 0);
-                      const bTimeMinutes =
-                        parseInt(b.time.hour) * 60 +
-                        parseInt(b.time.minute) +
-                        (b.time.period === "PM" && b.time.hour !== "12"
-                          ? 12 * 60
-                          : 0) +
-                        (b.time.period === "AM" && b.time.hour === "12"
-                          ? -12 * 60
-                          : 0);
-
-                      return aTimeMinutes - bTimeMinutes;
-                    },
-                  );
-
-                  // Reconstruct the final order: insert sorted non-draft schedules while preserving draft positions
-                  const finalSavedSchedules = [];
-                  let sortedIndex = 0;
-
-                  for (const schedule of savedSchedules) {
-                    if (schedule.isDraft) {
-                      // Keep draft schedules in their original position
-                      finalSavedSchedules.push(schedule);
-                    } else {
-                      // Replace with the sorted version
-                      finalSavedSchedules.push(
-                        sortedNonDraftSchedules[sortedIndex],
-                      );
-                      sortedIndex++;
-                    }
+                  // If there are draft schedules, don't sort anything to maintain positions
+                  if (hasDraftSchedules) {
+                    return customSchedules;
                   }
 
-                  return [
-                    ...customSchedules.filter((s) => !s.saved),
-                    ...finalSavedSchedules,
-                  ];
+                  // Otherwise, sort all saved schedules by day and time
+                  const unsavedSchedules = customSchedules.filter(
+                    (s) => !s.saved,
+                  );
+                  const savedSchedules = customSchedules.filter((s) => s.saved);
+
+                  const sortedSavedSchedules = savedSchedules.sort((a, b) => {
+                    // Day order: Sunday (0) through Saturday (6)
+                    const dayOrder = [
+                      "sun",
+                      "mon",
+                      "tue",
+                      "wed",
+                      "thu",
+                      "fri",
+                      "sat",
+                    ];
+
+                    // Get the first day for each schedule
+                    const aFirstDayIndex = Math.min(
+                      ...a.days.map((day) => dayOrder.indexOf(day)),
+                    );
+                    const bFirstDayIndex = Math.min(
+                      ...b.days.map((day) => dayOrder.indexOf(day)),
+                    );
+
+                    // First sort by first day
+                    if (aFirstDayIndex !== bFirstDayIndex) {
+                      return aFirstDayIndex - bFirstDayIndex;
+                    }
+
+                    // If same first day, sort by time
+                    const aTimeMinutes =
+                      parseInt(a.time.hour) * 60 +
+                      parseInt(a.time.minute) +
+                      (a.time.period === "PM" && a.time.hour !== "12"
+                        ? 12 * 60
+                        : 0) +
+                      (a.time.period === "AM" && a.time.hour === "12"
+                        ? -12 * 60
+                        : 0);
+                    const bTimeMinutes =
+                      parseInt(b.time.hour) * 60 +
+                      parseInt(b.time.minute) +
+                      (b.time.period === "PM" && b.time.hour !== "12"
+                        ? 12 * 60
+                        : 0) +
+                      (b.time.period === "AM" && b.time.hour === "12"
+                        ? -12 * 60
+                        : 0);
+
+                    return aTimeMinutes - bTimeMinutes;
+                  });
+
+                  return [...unsavedSchedules, ...sortedSavedSchedules];
                 })().map((schedule, index) => (
                   <ScheduleCard
                     key={schedule.id}
