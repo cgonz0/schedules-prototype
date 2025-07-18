@@ -177,8 +177,7 @@ export function ScheduleCard({
       originalSchedule.coolTemp !== schedule.coolTemp ||
       JSON.stringify(originalSchedule.days) !== JSON.stringify(schedule.days) ||
       JSON.stringify(originalSchedule.time) !== JSON.stringify(schedule.time) ||
-      originalSchedule.fanMode !== schedule.fanMode ||
-      originalSchedule.enabled !== schedule.enabled
+      originalSchedule.fanMode !== schedule.fanMode
     );
   };
 
