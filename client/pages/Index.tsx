@@ -213,9 +213,14 @@ export default function Index() {
                   const unsavedSchedules = customSchedules.filter(
                     (s) => !s.saved,
                   );
-                  const savedSchedules = customSchedules.filter((s) => s.saved); // Include both draft and non-draft saved schedules
+                  const draftSchedules = customSchedules.filter(
+                    (s) => s.saved && s.isDraft,
+                  );
+                  const savedSchedules = customSchedules.filter(
+                    (s) => s.saved && !s.isDraft,
+                  );
 
-                  // Sort all saved schedules (including drafts) together by day and time
+                  // Sort only the saved, non-draft schedules by day and time
                   const sortedSavedSchedules = savedSchedules.sort((a, b) => {
                     // Day order: Sunday (0) through Saturday (6)
                     const dayOrder = [
