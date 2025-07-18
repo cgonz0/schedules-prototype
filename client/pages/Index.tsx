@@ -213,14 +213,9 @@ export default function Index() {
                   const unsavedSchedules = customSchedules.filter(
                     (s) => !s.saved,
                   );
-                  const draftSchedules = customSchedules.filter(
-                    (s) => s.saved && s.isDraft,
-                  );
-                  const savedSchedules = customSchedules.filter(
-                    (s) => s.saved && !s.isDraft,
-                  );
+                  const savedSchedules = customSchedules.filter((s) => s.saved); // Include both draft and non-draft saved schedules
 
-                  // Sort only the saved, non-draft schedules
+                  // Sort all saved schedules (including drafts) together by day and time
                   const sortedSavedSchedules = savedSchedules.sort((a, b) => {
                     // Day order: Sunday (0) through Saturday (6)
                     const dayOrder = [
@@ -269,12 +264,8 @@ export default function Index() {
                     return aTimeMinutes - bTimeMinutes;
                   });
 
-                  // Combine groups in the correct order: unsaved, drafts, then sorted saved
-                  return [
-                    ...unsavedSchedules,
-                    ...draftSchedules,
-                    ...sortedSavedSchedules,
-                  ];
+                  // Combine groups: unsaved schedules at top, then all saved schedules (including drafts) sorted
+                  return [...unsavedSchedules, ...sortedSavedSchedules];
                 })().map((schedule, index) => (
                   <ScheduleCard
                     key={schedule.id}
