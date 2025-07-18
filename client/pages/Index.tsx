@@ -83,6 +83,7 @@ export default function Index() {
 
   const deleteSchedule = (id: number) => {
     setSchedules((prev) => prev.filter((schedule) => schedule.id !== id));
+    setDisplayOrder((prev) => prev.filter((scheduleId) => scheduleId !== id));
   };
 
   const createNewSchedule = () => {
