@@ -124,6 +124,7 @@ export default function Index() {
       smartScheduleName: preset.name,
     };
     setSchedules((prev) => [newSchedule, ...prev]);
+    // Smart schedules don't affect the display order of custom schedules
   };
 
   const formatDaysDisplay = (days: string[]) => {
