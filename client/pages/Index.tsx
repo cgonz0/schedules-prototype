@@ -213,23 +213,15 @@ export default function Index() {
                   const unsavedSchedules = customSchedules.filter(
                     (s) => !s.saved,
                   );
-                  const savedSchedules = customSchedules.filter((s) => s.saved);
+                  const draftSchedules = customSchedules.filter(
+                    (s) => s.saved && s.isDraft,
+                  );
+                  const savedSchedules = customSchedules.filter(
+                    (s) => s.saved && !s.isDraft,
+                  );
 
-                  // Create a map to maintain original order for draft schedules
-                  const originalOrderMap = new Map();
-                  savedSchedules.forEach((schedule, index) => {
-                    originalOrderMap.set(schedule.id, index);
-                  });
-
-                  // Sort saved schedules, but maintain draft positions in their original spots
+                  // Sort only the saved, non-draft schedules by day and time
                   const sortedSavedSchedules = savedSchedules.sort((a, b) => {
-                    // If either schedule is in draft mode, maintain their relative order by original position
-                    if (a.isDraft || b.isDraft) {
-                      return (
-                        originalOrderMap.get(a.id) - originalOrderMap.get(b.id)
-                      );
-                    }
-
                     // Day order: Sunday (0) through Saturday (6)
                     const dayOrder = [
                       "sun",
@@ -277,7 +269,29 @@ export default function Index() {
                     return aTimeMinutes - bTimeMinutes;
                   });
 
-                  return [...unsavedSchedules, ...sortedSavedSchedules];
+                  // Merge draft schedules back into their original positions relative to the sorted schedules
+                  // by using the original order from the schedules array
+                  const allSavedSchedules = customSchedules.filter(
+                    (s) => s.saved,
+                  );
+                  const finalSchedules = [];
+
+                  allSavedSchedules.forEach((schedule) => {
+                    if (schedule.isDraft) {
+                      // Keep draft schedules in their original position
+                      finalSchedules.push(schedule);
+                    } else {
+                      // Find the schedule in the sorted list and add it
+                      const sortedSchedule = sortedSavedSchedules.find(
+                        (s) => s.id === schedule.id,
+                      );
+                      if (sortedSchedule) {
+                        finalSchedules.push(sortedSchedule);
+                      }
+                    }
+                  });
+
+                  return [...unsavedSchedules, ...finalSchedules];
                 })().map((schedule, index) => (
                   <ScheduleCard
                     key={schedule.id}
