@@ -66,6 +66,7 @@ const PRESET_SCHEDULES: PresetSchedule[] = [
 export default function Index() {
   const [isAwayMode, setIsAwayMode] = useState(false);
   const [schedules, setSchedules] = useState([]);
+  const [displayOrder, setDisplayOrder] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isSmartScheduleExpanded, setIsSmartScheduleExpanded] = useState(false);
   const [expandedSmartSchedules, setExpandedSmartSchedules] = useState(
