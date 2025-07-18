@@ -269,8 +269,15 @@ export default function Index() {
                     return aTimeMinutes - bTimeMinutes;
                   });
 
-                  // Combine groups: unsaved schedules at top, then all saved schedules (including drafts) sorted
-                  return [...unsavedSchedules, ...sortedSavedSchedules];
+                  // Combine schedules: unsaved at top, then mix draft and saved to maintain positions
+                  // Sort by ID to maintain stable relative positioning for draft schedules
+                  const allSavedAndDrafts = [
+                    ...draftSchedules,
+                    ...sortedSavedSchedules,
+                  ];
+                  allSavedAndDrafts.sort((a, b) => a.id - b.id);
+
+                  return [...unsavedSchedules, ...allSavedAndDrafts];
                 })().map((schedule, index) => (
                   <ScheduleCard
                     key={schedule.id}
