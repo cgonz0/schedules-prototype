@@ -97,6 +97,7 @@ export default function Index() {
       fanMode: null,
     };
     setSchedules((prev) => [newSchedule, ...prev]);
+    setDisplayOrder((prev) => [newId, ...prev]);
   };
 
   const isPresetAlreadyUsed = (presetName: string) => {
@@ -525,7 +526,7 @@ export default function Index() {
                                         >
                                           <span className="text-base font-semibold text-[#9B9FA6]">
                                             {schedule.mode === "auto"
-                                              ? `${schedule.heatTemp || 68}° - ${schedule.coolTemp || 75}��`
+                                              ? `${schedule.heatTemp || 68}° - ${schedule.coolTemp || 75}°`
                                               : `${schedule.temperature || 73}°`}
                                           </span>
                                         </div>
