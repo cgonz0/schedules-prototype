@@ -215,12 +215,19 @@ export default function Index() {
                     (s) => s.isDraft,
                   );
 
-                  // If there are draft schedules, don't sort anything to maintain positions
+                  // If there are draft schedules, use the tracked display order
                   if (hasDraftSchedules) {
-                    return customSchedules;
+                    // Use the current display order, fallback to current schedules order if not set
+                    const orderToUse =
+                      displayOrder.length > 0
+                        ? displayOrder
+                        : customSchedules.map((s) => s.id);
+                    return orderToUse
+                      .map((id) => customSchedules.find((s) => s.id === id))
+                      .filter((s) => s !== undefined);
                   }
 
-                  // Otherwise, sort all saved schedules by day and time
+                  // Otherwise, sort all saved schedules by day and time and update display order
                   const unsavedSchedules = customSchedules.filter(
                     (s) => !s.saved,
                   );
@@ -274,7 +281,21 @@ export default function Index() {
                     return aTimeMinutes - bTimeMinutes;
                   });
 
-                  return [...unsavedSchedules, ...sortedSavedSchedules];
+                  const finalOrder = [
+                    ...unsavedSchedules,
+                    ...sortedSavedSchedules,
+                  ];
+
+                  // Update the display order for future reference
+                  const newDisplayOrder = finalOrder.map((s) => s.id);
+                  if (
+                    JSON.stringify(newDisplayOrder) !==
+                    JSON.stringify(displayOrder)
+                  ) {
+                    setDisplayOrder(newDisplayOrder);
+                  }
+
+                  return finalOrder;
                 })().map((schedule, index) => (
                   <ScheduleCard
                     key={schedule.id}
@@ -504,7 +525,7 @@ export default function Index() {
                                         >
                                           <span className="text-base font-semibold text-[#9B9FA6]">
                                             {schedule.mode === "auto"
-                                              ? `${schedule.heatTemp || 68}° - ${schedule.coolTemp || 75}°`
+                                              ? `${schedule.heatTemp || 68}° - ${schedule.coolTemp || 75}��`
                                               : `${schedule.temperature || 73}°`}
                                           </span>
                                         </div>
