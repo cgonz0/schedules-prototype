@@ -213,15 +213,23 @@ export default function Index() {
                   const unsavedSchedules = customSchedules.filter(
                     (s) => !s.saved,
                   );
-                  const draftSchedules = customSchedules.filter(
-                    (s) => s.saved && s.isDraft,
-                  );
-                  const savedSchedules = customSchedules.filter(
-                    (s) => s.saved && !s.isDraft,
-                  );
+                  const savedSchedules = customSchedules.filter((s) => s.saved);
 
-                  // Sort only the saved, non-draft schedules by day and time
+                  // Create a map to maintain original order for draft schedules
+                  const originalOrderMap = new Map();
+                  savedSchedules.forEach((schedule, index) => {
+                    originalOrderMap.set(schedule.id, index);
+                  });
+
+                  // Sort saved schedules, but maintain draft positions in their original spots
                   const sortedSavedSchedules = savedSchedules.sort((a, b) => {
+                    // If either schedule is in draft mode, maintain their relative order by original position
+                    if (a.isDraft || b.isDraft) {
+                      return (
+                        originalOrderMap.get(a.id) - originalOrderMap.get(b.id)
+                      );
+                    }
+
                     // Day order: Sunday (0) through Saturday (6)
                     const dayOrder = [
                       "sun",
@@ -269,16 +277,7 @@ export default function Index() {
                     return aTimeMinutes - bTimeMinutes;
                   });
 
-                  // Combine schedules: unsaved at top, then draft schedules (sorted by ID for stable positioning), then sorted saved schedules
-                  const sortedDraftSchedules = draftSchedules.sort(
-                    (a, b) => a.id - b.id,
-                  );
-
-                  return [
-                    ...unsavedSchedules,
-                    ...sortedDraftSchedules,
-                    ...sortedSavedSchedules,
-                  ];
+                  return [...unsavedSchedules, ...sortedSavedSchedules];
                 })().map((schedule, index) => (
                   <ScheduleCard
                     key={schedule.id}
