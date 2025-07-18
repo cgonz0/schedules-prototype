@@ -209,89 +209,89 @@ export default function Index() {
                     (s) => !s.isSmartSchedule,
                   );
 
-                  // Separate schedules into groups to maintain stable positioning
-                  const unsavedSchedules = customSchedules.filter(
-                    (s) => !s.saved,
+                  // First, get current order for all saved schedules to preserve draft positions
+                  const savedSchedules = customSchedules.filter((s) => s.saved);
+
+                  // Separate draft and non-draft schedules
+                  const draftSchedules = savedSchedules.filter(
+                    (s) => s.isDraft,
                   );
-                  const draftSchedules = customSchedules.filter(
-                    (s) => s.saved && s.isDraft,
-                  );
-                  const savedSchedules = customSchedules.filter(
-                    (s) => s.saved && !s.isDraft,
+                  const nonDraftSchedules = savedSchedules.filter(
+                    (s) => !s.isDraft,
                   );
 
-                  // Sort only the saved, non-draft schedules by day and time
-                  const sortedSavedSchedules = savedSchedules.sort((a, b) => {
-                    // Day order: Sunday (0) through Saturday (6)
-                    const dayOrder = [
-                      "sun",
-                      "mon",
-                      "tue",
-                      "wed",
-                      "thu",
-                      "fri",
-                      "sat",
-                    ];
+                  // Sort only the non-draft schedules
+                  const sortedNonDraftSchedules = nonDraftSchedules.sort(
+                    (a, b) => {
+                      // Day order: Sunday (0) through Saturday (6)
+                      const dayOrder = [
+                        "sun",
+                        "mon",
+                        "tue",
+                        "wed",
+                        "thu",
+                        "fri",
+                        "sat",
+                      ];
 
-                    // Get the first day for each schedule
-                    const aFirstDayIndex = Math.min(
-                      ...a.days.map((day) => dayOrder.indexOf(day)),
-                    );
-                    const bFirstDayIndex = Math.min(
-                      ...b.days.map((day) => dayOrder.indexOf(day)),
-                    );
+                      // Get the first day for each schedule
+                      const aFirstDayIndex = Math.min(
+                        ...a.days.map((day) => dayOrder.indexOf(day)),
+                      );
+                      const bFirstDayIndex = Math.min(
+                        ...b.days.map((day) => dayOrder.indexOf(day)),
+                      );
 
-                    // First sort by first day
-                    if (aFirstDayIndex !== bFirstDayIndex) {
-                      return aFirstDayIndex - bFirstDayIndex;
-                    }
+                      // First sort by first day
+                      if (aFirstDayIndex !== bFirstDayIndex) {
+                        return aFirstDayIndex - bFirstDayIndex;
+                      }
 
-                    // If same first day, sort by time
-                    const aTimeMinutes =
-                      parseInt(a.time.hour) * 60 +
-                      parseInt(a.time.minute) +
-                      (a.time.period === "PM" && a.time.hour !== "12"
-                        ? 12 * 60
-                        : 0) +
-                      (a.time.period === "AM" && a.time.hour === "12"
-                        ? -12 * 60
-                        : 0);
-                    const bTimeMinutes =
-                      parseInt(b.time.hour) * 60 +
-                      parseInt(b.time.minute) +
-                      (b.time.period === "PM" && b.time.hour !== "12"
-                        ? 12 * 60
-                        : 0) +
-                      (b.time.period === "AM" && b.time.hour === "12"
-                        ? -12 * 60
-                        : 0);
+                      // If same first day, sort by time
+                      const aTimeMinutes =
+                        parseInt(a.time.hour) * 60 +
+                        parseInt(a.time.minute) +
+                        (a.time.period === "PM" && a.time.hour !== "12"
+                          ? 12 * 60
+                          : 0) +
+                        (a.time.period === "AM" && a.time.hour === "12"
+                          ? -12 * 60
+                          : 0);
+                      const bTimeMinutes =
+                        parseInt(b.time.hour) * 60 +
+                        parseInt(b.time.minute) +
+                        (b.time.period === "PM" && b.time.hour !== "12"
+                          ? 12 * 60
+                          : 0) +
+                        (b.time.period === "AM" && b.time.hour === "12"
+                          ? -12 * 60
+                          : 0);
 
-                    return aTimeMinutes - bTimeMinutes;
-                  });
-
-                  // Merge draft schedules back into their original positions relative to the sorted schedules
-                  // by using the original order from the schedules array
-                  const allSavedSchedules = customSchedules.filter(
-                    (s) => s.saved,
+                      return aTimeMinutes - bTimeMinutes;
+                    },
                   );
-                  const finalSchedules = [];
 
-                  allSavedSchedules.forEach((schedule) => {
+                  // Reconstruct the final order: insert sorted non-draft schedules while preserving draft positions
+                  const finalSavedSchedules = [];
+                  let sortedIndex = 0;
+
+                  for (const schedule of savedSchedules) {
                     if (schedule.isDraft) {
                       // Keep draft schedules in their original position
-                      finalSchedules.push(schedule);
+                      finalSavedSchedules.push(schedule);
                     } else {
-                      // Find the schedule in the sorted list and add it
-                      const sortedSchedule = sortedSavedSchedules.find(
-                        (s) => s.id === schedule.id,
+                      // Replace with the sorted version
+                      finalSavedSchedules.push(
+                        sortedNonDraftSchedules[sortedIndex],
                       );
-                      if (sortedSchedule) {
-                        finalSchedules.push(sortedSchedule);
-                      }
+                      sortedIndex++;
                     }
-                  });
+                  }
 
-                  return [...unsavedSchedules, ...finalSchedules];
+                  return [
+                    ...customSchedules.filter((s) => !s.saved),
+                    ...finalSavedSchedules,
+                  ];
                 })().map((schedule, index) => (
                   <ScheduleCard
                     key={schedule.id}
