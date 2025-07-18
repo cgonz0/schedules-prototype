@@ -275,9 +275,9 @@ export default function Index() {
                     ...draftSchedules,
                     ...sortedSavedSchedules,
                   ];
-                })().map((schedule) => (
+                })().map((schedule, index) => (
                   <ScheduleCard
-                    key={schedule.id}
+                    key={`${schedule.id}-${schedule.saved ? "saved" : "unsaved"}-${schedule.isDraft ? "draft" : "final"}-${index}`}
                     schedule={schedule}
                     isAwayModeActive={isAwayMode}
                     onUpdate={(updates) => updateSchedule(schedule.id, updates)}
