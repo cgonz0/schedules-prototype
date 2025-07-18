@@ -201,7 +201,8 @@ export function ScheduleCard({
   // Wrapper function to handle updates and set draft state
   const handleUpdate = (updates: Partial<Schedule>) => {
     // If this is a saved schedule and we're making changes, mark as draft
-    if (schedule.saved && originalSchedule) {
+    // But exclude 'enabled' changes since pause/unpause should be immediate
+    if (schedule.saved && originalSchedule && !("enabled" in updates)) {
       const newSchedule = { ...schedule, ...updates };
       const willHaveChanges =
         originalSchedule.mode !== newSchedule.mode ||
@@ -212,8 +213,7 @@ export function ScheduleCard({
           JSON.stringify(newSchedule.days) ||
         JSON.stringify(originalSchedule.time) !==
           JSON.stringify(newSchedule.time) ||
-        originalSchedule.fanMode !== newSchedule.fanMode ||
-        originalSchedule.enabled !== newSchedule.enabled;
+        originalSchedule.fanMode !== newSchedule.fanMode;
 
       if (willHaveChanges) {
         updates.isDraft = true;
