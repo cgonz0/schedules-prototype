@@ -19,9 +19,15 @@ interface Schedule {
   isDraft?: boolean;
 }
 
+interface ScheduleConflict {
+  days: string[];
+  time: { hour: string; minute: string; period: string };
+}
+
 interface ScheduleCardProps {
   schedule: Schedule;
   isAwayModeActive?: boolean;
+  conflict?: ScheduleConflict | null;
   onUpdate: (updates: Partial<Schedule>) => void;
   onDelete: () => void;
 }
@@ -29,6 +35,7 @@ interface ScheduleCardProps {
 export function ScheduleCard({
   schedule,
   isAwayModeActive = false,
+  conflict,
   onUpdate,
   onDelete,
 }: ScheduleCardProps) {
