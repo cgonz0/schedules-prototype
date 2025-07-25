@@ -108,8 +108,9 @@ export default function Index() {
       return null;
     }
 
-    const conflicts = [];
+    const allConflictingDays = [];
     const scheduleTimeInMinutes = convertTimeToMinutes(schedule.time);
+    let conflictTime = null;
 
     for (const otherSchedule of schedules) {
       if (otherSchedule.id === schedule.id || !otherSchedule.saved || otherSchedule.isDraft) {
@@ -124,14 +125,19 @@ export default function Index() {
       const conflictingDays = schedule.days.filter(day => otherSchedule.days.includes(day));
 
       if (conflictingDays.length > 0 && scheduleTimeInMinutes === otherTimeInMinutes) {
-        conflicts.push({
-          days: conflictingDays,
-          time: otherSchedule.time
-        });
+        allConflictingDays.push(...conflictingDays);
+        if (!conflictTime) {
+          conflictTime = otherSchedule.time;
+        }
       }
     }
 
-    return conflicts.length > 0 ? conflicts[0] : null;
+    // Remove duplicates and return conflict object
+    const uniqueConflictingDays = [...new Set(allConflictingDays)];
+    return uniqueConflictingDays.length > 0 ? {
+      days: uniqueConflictingDays,
+      time: conflictTime
+    } : null;
   };
 
   // Convert time object to minutes for comparison
@@ -160,7 +166,7 @@ export default function Index() {
       mode: null,
       temperature: null,
       days: [],
-      time: { hour: "", minute: "", period: "AM" },
+      time: { hour: "", minute: "", period: "" },
       enabled: true,
       fanMode: null,
     };
