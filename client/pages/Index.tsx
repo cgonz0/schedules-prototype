@@ -350,6 +350,7 @@ export default function Index() {
                     key={schedule.id}
                     schedule={schedule}
                     isAwayModeActive={isAwayMode}
+                    conflict={getScheduleConflicts(schedule)}
                     onUpdate={(updates) => updateSchedule(schedule.id, updates)}
                     onDelete={() => deleteSchedule(schedule.id)}
                   />
