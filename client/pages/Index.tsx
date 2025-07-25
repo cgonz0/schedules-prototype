@@ -104,7 +104,7 @@ export default function Index() {
 
   // Check for schedule conflicts
   const getScheduleConflicts = (schedule: any) => {
-    if (!schedule.days || schedule.days.length === 0 || !schedule.time.hour || !schedule.time.minute) {
+    if (!schedule.days || schedule.days.length === 0 || !schedule.time.hour || !schedule.time.minute || !schedule.time.period) {
       return null;
     }
 
