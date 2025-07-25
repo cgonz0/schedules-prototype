@@ -65,7 +65,28 @@ const PRESET_SCHEDULES: PresetSchedule[] = [
 
 export default function Index() {
   const [isAwayMode, setIsAwayMode] = useState(false);
-  const [schedules, setSchedules] = useState([]);
+  const [schedules, setSchedules] = useState([
+    {
+      id: 1,
+      mode: "cool",
+      temperature: 73,
+      days: ["mon", "tue", "wed", "thu", "fri"],
+      time: { hour: "8", minute: "00", period: "AM" },
+      enabled: true,
+      fanMode: "auto",
+      saved: true
+    },
+    {
+      id: 2,
+      mode: "heat",
+      temperature: 68,
+      days: ["fri", "sat"],
+      time: { hour: "8", minute: "00", period: "PM" },
+      enabled: false,
+      fanMode: "auto",
+      saved: true
+    }
+  ]);
   const [displayOrder, setDisplayOrder] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isSmartScheduleExpanded, setIsSmartScheduleExpanded] = useState(false);
