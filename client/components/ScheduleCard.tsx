@@ -701,11 +701,36 @@ export function ScheduleCard({
               </div>
             </div>
 
+            {/* Conflict Warning Banner */}
+            {hasConflicts() && (
+              <div className="flex items-center gap-2 p-2 bg-[#FAE5C6] rounded-xl">
+                <div className="flex items-center p-2">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12 5.15789C12.2907 5.15789 12.5263 5.39353 12.5263 5.68421V15.1579C12.5263 15.4486 12.2907 15.6842 12 15.6842C11.7093 15.6842 11.4737 15.4486 11.4737 15.1579V5.68421C11.4737 5.39353 11.7093 5.15789 12 5.15789ZM12.5263 18.3158C12.5263 18.6065 12.2907 18.8421 12 18.8421C11.7093 18.8421 11.4737 18.6065 11.4737 18.3158C11.4737 18.0251 11.7093 17.7895 12 17.7895C12.2907 17.7895 12.5263 18.0251 12.5263 18.3158Z"
+                      fill="#663500"
+                    />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-[#2E3237] leading-5">
+                    {getConflictMessage()}
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Save Button */}
             <div className="pt-4">
               <button
                 className={`w-full h-10 px-6 font-semibold rounded-lg transition-colors ${
-                  !schedule.enabled
+                  !schedule.enabled || hasConflicts()
                     ? "bg-[#CCD1D8] text-[#95A0AC] cursor-not-allowed"
                     : (isScheduleComplete() && !schedule.saved) ||
                         (schedule.saved && hasUnsavedChanges())
@@ -715,10 +740,12 @@ export function ScheduleCard({
                 disabled={
                   !schedule.enabled ||
                   !isScheduleComplete() ||
+                  hasConflicts() ||
                   (schedule.saved && !hasUnsavedChanges())
                 }
                 onClick={
                   schedule.enabled &&
+                  !hasConflicts() &&
                   ((isScheduleComplete() && !schedule.saved) ||
                     (schedule.saved && hasUnsavedChanges()))
                     ? handleSave
