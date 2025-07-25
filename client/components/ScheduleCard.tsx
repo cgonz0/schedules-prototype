@@ -173,6 +173,32 @@ export function ScheduleCard({
     );
   };
 
+  // Check if there are conflicts that prevent saving
+  const hasConflicts = () => {
+    return conflict !== null && conflict !== undefined;
+  };
+
+  // Format conflict message
+  const getConflictMessage = () => {
+    if (!conflict) return "";
+
+    const dayNames = {
+      sun: "Sunday",
+      mon: "Monday",
+      tue: "Tuesday",
+      wed: "Wednesday",
+      thu: "Thursday",
+      fri: "Friday",
+      sat: "Saturday"
+    };
+
+    const conflictDay = conflict.days[0]; // Use first conflicting day
+    const dayName = dayNames[conflictDay as keyof typeof dayNames];
+    const timeStr = `${conflict.time.hour}:${conflict.time.minute} ${conflict.time.period}`;
+
+    return `${dayName} has an event scheduled at ${timeStr}. Please select a different time to continue.`;
+  };
+
   // Check if schedule has unsaved changes
   const hasUnsavedChanges = () => {
     if (!originalSchedule || !schedule.saved) return false;
