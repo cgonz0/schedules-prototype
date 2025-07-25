@@ -13,7 +13,7 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
   const hasTime = time.hour && time.minute;
 
   const clearTime = () => {
-    onTimeChange({ hour: "", minute: "", period: "AM" });
+    onTimeChange({ hour: "", minute: "", period: "" });
   };
 
   const handleHourChange = (newHour: string) => {
@@ -76,14 +76,17 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
                 ))}
               </select>
 
-              {/* Period Toggle */}
-              <button
-                onClick={handlePeriodToggle}
-                className="w-8 h-5 rounded-xl text-xs text-secondary-foreground hover:bg-gray-300 transition-colors flex-shrink-0"
+              {/* Period Selector */}
+              <select
+                value={time.period}
+                onChange={(e) => onTimeChange({ ...time, period: e.target.value })}
+                className="w-8 h-5 rounded-xl text-xs text-secondary-foreground text-center border-none outline-none appearance-none cursor-pointer flex-shrink-0"
                 style={{ backgroundColor: "#EDEFF2" }}
               >
-                {time.hour ? time.period : "--"}
-              </button>
+                <option value="">--</option>
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
             </div>
             {hasTime && (
               <button
