@@ -81,6 +81,52 @@ export default function Index() {
     );
   };
 
+  // Check for schedule conflicts
+  const getScheduleConflicts = (schedule: any) => {
+    if (!schedule.days || schedule.days.length === 0 || !schedule.time.hour || !schedule.time.minute) {
+      return null;
+    }
+
+    const conflicts = [];
+    const scheduleTimeInMinutes = convertTimeToMinutes(schedule.time);
+
+    for (const otherSchedule of schedules) {
+      if (otherSchedule.id === schedule.id || !otherSchedule.saved || otherSchedule.isDraft) {
+        continue;
+      }
+
+      if (!otherSchedule.days || otherSchedule.days.length === 0 || !otherSchedule.time.hour || !otherSchedule.time.minute) {
+        continue;
+      }
+
+      const otherTimeInMinutes = convertTimeToMinutes(otherSchedule.time);
+      const conflictingDays = schedule.days.filter(day => otherSchedule.days.includes(day));
+
+      if (conflictingDays.length > 0 && scheduleTimeInMinutes === otherTimeInMinutes) {
+        conflicts.push({
+          days: conflictingDays,
+          time: otherSchedule.time
+        });
+      }
+    }
+
+    return conflicts.length > 0 ? conflicts[0] : null;
+  };
+
+  // Convert time object to minutes for comparison
+  const convertTimeToMinutes = (time: { hour: string; minute: string; period: string }) => {
+    let hours = parseInt(time.hour);
+    const minutes = parseInt(time.minute);
+
+    if (time.period === 'PM' && hours !== 12) {
+      hours += 12;
+    } else if (time.period === 'AM' && hours === 12) {
+      hours = 0;
+    }
+
+    return hours * 60 + minutes;
+  };
+
   const deleteSchedule = (id: number) => {
     setSchedules((prev) => prev.filter((schedule) => schedule.id !== id));
     setDisplayOrder((prev) => prev.filter((scheduleId) => scheduleId !== id));
