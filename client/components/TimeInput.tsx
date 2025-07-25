@@ -17,11 +17,21 @@ export function TimeInput({ time, onTimeChange }: TimeInputProps) {
   };
 
   const handleHourChange = (newHour: string) => {
-    onTimeChange({ ...time, hour: newHour });
+    const updates = { ...time, hour: newHour };
+    // Auto-default to AM if period is empty and hour is being set
+    if (newHour && !time.period) {
+      updates.period = "AM";
+    }
+    onTimeChange(updates);
   };
 
   const handleMinuteChange = (newMinute: string) => {
-    onTimeChange({ ...time, minute: newMinute });
+    const updates = { ...time, minute: newMinute };
+    // Auto-default to AM if period is empty and minute is being set
+    if (newMinute && !time.period) {
+      updates.period = "AM";
+    }
+    onTimeChange(updates);
   };
 
   const handlePeriodToggle = () => {
