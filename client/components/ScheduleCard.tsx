@@ -192,11 +192,24 @@ export function ScheduleCard({
       sat: "Saturday"
     };
 
-    const conflictDay = conflict.days[0]; // Use first conflicting day
-    const dayName = dayNames[conflictDay as keyof typeof dayNames];
-    const timeStr = `${conflict.time.hour}:${conflict.time.minute} ${conflict.time.period}`;
+    // Convert all conflicting days to full names
+    const conflictingDayNames = conflict.days.map(day => dayNames[day as keyof typeof dayNames]);
 
-    return `${dayName} has an event scheduled at ${timeStr}. Please select a different time to continue.`;
+    // Format the day list with proper grammar
+    let dayText = "";
+    if (conflictingDayNames.length === 1) {
+      dayText = conflictingDayNames[0];
+    } else if (conflictingDayNames.length === 2) {
+      dayText = `${conflictingDayNames[0]} and ${conflictingDayNames[1]}`;
+    } else {
+      const lastDay = conflictingDayNames.pop();
+      dayText = `${conflictingDayNames.join(", ")} and ${lastDay}`;
+    }
+
+    const timeStr = `${conflict.time.hour}:${conflict.time.minute} ${conflict.time.period}`;
+    const eventText = conflictingDayNames.length === 1 ? "has an event" : "have an event";
+
+    return `${dayText} ${eventText} scheduled at ${timeStr}. Please select a different time to continue.`;
   };
 
   // Check if schedule has unsaved changes
