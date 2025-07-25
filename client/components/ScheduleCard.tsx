@@ -702,7 +702,7 @@ export function ScheduleCard({
             </div>
 
             {/* Conflict Warning Banner */}
-            {hasConflicts() && (
+            {!isCollapsed && hasConflicts() && (
               <div className="flex items-center gap-2 p-2 bg-[#FAE5C6] rounded-xl">
                 <div className="flex items-center p-2">
                   <svg
