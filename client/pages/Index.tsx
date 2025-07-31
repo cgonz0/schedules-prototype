@@ -822,7 +822,7 @@ export default function Index() {
                     </div>
                     <div className="flex flex-col gap-1 flex-1 min-w-0 text-left">
                       <h3 className="text-base font-semibold text-[#1D2025] leading-5">
-                        Smart Schedule
+                        SMRT Schedule
                       </h3>
                       <p className="text-sm text-[#1D2025] leading-5">
                         Select an energy-saving preset recommended by your
